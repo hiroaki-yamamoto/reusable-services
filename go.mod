@@ -1,4 +1,4 @@
-module github.com/hiroaki-yamamoto/reusable-sercices
+module github.com/hiroaki-yamamoto/reusable-services
 
 go 1.13
 
