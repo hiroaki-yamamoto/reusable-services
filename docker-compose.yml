@@ -13,7 +13,7 @@ services:
     build:
       context: .
       args:
-        PKGNAME: db/mongodb
+        PKGNAME: adapter/db/mongodb
     volumes:
       - ".:/opt/code"
     depends_on:
