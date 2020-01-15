@@ -1,0 +1,6 @@
+{
+  "files.exclude": {
+    "adapter": true,
+    "token": true
+  }
+}

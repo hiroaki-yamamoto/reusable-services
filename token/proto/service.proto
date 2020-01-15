@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package token;
+option go_package = "github.com/hiroaki-yamamoto/token/rpc";
+
+import "model.proto";
+
+service Token {
+  rpc Push(token.models.Token) returns (token.models.Token);
+  rpc Pop(token.models.Token) returns (token.models.Token);
+}

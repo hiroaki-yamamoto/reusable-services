@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": ".",
+			"name": "Reusable Services"
+		},
+		{
+			"path": "token",
+			"name": "Token Service"
+		},
+		{
+			"path": "adapter",
+			"name": "Adapter"
+		}
+	],
+	"settings": {}
+}
