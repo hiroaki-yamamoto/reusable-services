@@ -6,6 +6,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/hiroaki-yamamoto/reusable-services/adapter/db/mongodb"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"go.mongodb.org/mongo-driver/bson"
@@ -17,7 +18,9 @@ import (
 var cli *mongo.Client
 var db *mongo.Database
 var col *mongo.Collection
+var adapter *mongodb.Mongo
 var rootCtx context.Context
+var samples bson.A
 
 // TimeoutContext creates a new timeout context with 3 seconds-timeout from
 // rootCtx
@@ -41,11 +44,12 @@ var _ = BeforeSuite(func() {
 	)
 	Expect(err).To(Succeed())
 	db = cli.Database("adapter-test")
+	adapter = mongodb.New(db.Collection("adapters"))
 	col = db.Collection("adapters")
 })
 
 var _ = BeforeEach(func() {
-	samples := make(bson.A, 20)
+	samples = make(bson.A, 20)
 	for i := range samples {
 		samples[i] = bson.M{
 			"_id":    pr.NewObjectID(),
@@ -59,6 +63,7 @@ var _ = BeforeEach(func() {
 })
 
 var _ = AfterEach(func() {
+	samples = nil
 	ctx, cancel := TimeoutContext()
 	defer cancel()
 	Expect(col.Drop(ctx)).To(Succeed())
