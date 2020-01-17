@@ -13,10 +13,8 @@ import (
 var _ = Describe("Delete", func() {
 	var chosenID pr.ObjectID
 	BeforeEach(func() {
-		randomDct, ok := samples[rand.Intn(len(samples))].(bson.M)
-		Expect(ok).Should(BeTrue())
-		chosenID, ok = randomDct["_id"].(pr.ObjectID)
-		Expect(ok).Should(BeTrue())
+		randomDct := samples[rand.Intn(len(samples))]
+		chosenID = randomDct.ID
 	})
 	It("Delete should work", func() {
 		delCtx, cancelDel := TimeoutContext()
@@ -39,10 +37,12 @@ var _ = Describe("Delete Many", func() {
 	BeforeEach(func() {
 		chosenID = make([]pr.ObjectID, 5)
 		for i := range chosenID {
-			randomDct, ok := samples[rand.Intn(len(samples))].(bson.M)
-			Expect(ok).Should(BeTrue())
-			chosenID[i], ok = randomDct["_id"].(pr.ObjectID)
-			Expect(ok).Should(BeTrue())
+			var id pr.ObjectID
+			for ContainObjectID(id, chosenID) {
+				randomDct := samples[rand.Intn(len(samples))]
+				id = randomDct.ID
+			}
+			chosenID[i] = id
 		}
 	})
 	It("DeleteMany should work", func() {

@@ -20,7 +20,14 @@ var db *mongo.Database
 var col *mongo.Collection
 var adapter *mongodb.Mongo
 var rootCtx context.Context
-var samples bson.A
+
+type Sample struct {
+	ID     pr.ObjectID `bson:"_id"`
+	Number int
+	Meta   string
+}
+
+var samples []*Sample
 
 // TimeoutContext creates a new timeout context with 3 seconds-timeout from
 // rootCtx
@@ -32,6 +39,17 @@ func TimeoutContext() (ctx context.Context, cancelFunc context.CancelFunc) {
 func TestMongodb(t *testing.T) {
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "Mongodb Suite")
+}
+
+// ContainObjectID returns true if the specified ObjectID "target" is found
+// in a slice of []ObjectID named "arr"
+func ContainObjectID(target pr.ObjectID, arr []pr.ObjectID) bool {
+	for _, v := range arr {
+		if v.Hex() == target.Hex() {
+			return true
+		}
+	}
+	return false
 }
 
 var _ = BeforeSuite(func() {
@@ -49,17 +67,19 @@ var _ = BeforeSuite(func() {
 })
 
 var _ = BeforeEach(func() {
-	samples = make(bson.A, 20)
+	samples = make([]*Sample, 20)
+	toInsert := make(bson.A, len(samples))
 	for i := range samples {
-		samples[i] = bson.M{
-			"_id":    pr.NewObjectID(),
-			"number": i,
-			"meta":   fmt.Sprintf("Hello %d", i),
+		samples[i] = &Sample{
+			ID:     pr.NewObjectID(),
+			Number: i,
+			Meta:   fmt.Sprintf("Hello %d", i),
 		}
+		toInsert[i] = samples[i]
 	}
 	ctx, cancel := TimeoutContext()
 	defer cancel()
-	col.InsertMany(ctx, samples)
+	col.InsertMany(ctx, toInsert)
 })
 
 var _ = AfterEach(func() {
