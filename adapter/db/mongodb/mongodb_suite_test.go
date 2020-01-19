@@ -6,6 +6,7 @@ import (
 	"testing"
 	"time"
 
+	ad "github.com/hiroaki-yamamoto/reusable-services/adapter"
 	"github.com/hiroaki-yamamoto/reusable-services/adapter/db/mongodb"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -18,7 +19,7 @@ import (
 var cli *mongo.Client
 var db *mongo.Database
 var col *mongo.Collection
-var adapter *mongodb.Mongo
+var adapter ad.IAdapter
 var rootCtx context.Context
 
 type Sample struct {

@@ -10,6 +10,7 @@ type IAdapter interface {
 	InsertMany(context.Context, []interface{}) (interface{}, error)
 	Replace(context.Context, interface{}, interface{}) (interface{}, error)
 	Update(context.Context, interface{}, interface{}) (interface{}, error)
+	UpdateMany(context.Context, interface{}, interface{}) (interface{}, error)
 	Delete(context.Context, interface{}) (interface{}, error)
 	DeleteMany(context.Context, interface{}) (interface{}, error)
 }
