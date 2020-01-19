@@ -42,3 +42,24 @@ var _ = Describe("Find", func() {
 		Expect(docs).To(ConsistOf(chosenDocs))
 	})
 })
+
+var _ = Describe("FindOne", func() {
+	var chosenID pr.ObjectID
+	var chosenDoc *Sample
+	BeforeEach(func() {
+		chosenDoc = samples[rand.Intn(len(samples))]
+		chosenID = chosenDoc.ID
+	})
+	It("Should find the correct documents.", func() {
+		ctx, cancel := TimeoutContext()
+		defer cancel()
+		curInt, err := adapter.FindOne(ctx, bson.M{"_id": chosenID})
+		Expect(err).To(Succeed())
+		res, ok := curInt.(*mongo.SingleResult)
+		Expect(ok).To(BeTrue())
+		Expect(res.Err()).To(Succeed())
+		var doc *Sample
+		res.Decode(&doc)
+		Expect(doc).To(Equal(chosenDoc))
+	})
+})
