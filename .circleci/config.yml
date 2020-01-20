@@ -7,8 +7,8 @@ jobs:
           GO111MODULE: 'on'
       - image: mongo
           environment:
-          MONGO_INITDB_ROOT_USERNAME: adapter
-          MONGO_INITDB_ROOT_PASSWORD: adapter
+            MONGO_INITDB_ROOT_USERNAME: adapter
+            MONGO_INITDB_ROOT_PASSWORD: adapter
     working_directory: ~/repo
     steps:
       - checkout
