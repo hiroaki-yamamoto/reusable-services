@@ -38,7 +38,7 @@ var _ = Describe("Find", func() {
 		ctx, stop := TimeoutContext()
 		defer stop()
 		var docs []*Sample
-		cur.All(ctx, &docs)
+		Expect(cur.All(ctx, &docs)).To(Succeed())
 		Expect(docs).To(ConsistOf(chosenDocs))
 	})
 })

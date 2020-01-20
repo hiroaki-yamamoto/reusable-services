@@ -8,7 +8,6 @@ type IAdapter interface {
 	FindOne(context.Context, interface{}) (interface{}, error)
 	Insert(context.Context, interface{}) (interface{}, error)
 	InsertMany(context.Context, []interface{}) (interface{}, error)
-	Replace(context.Context, interface{}, interface{}) (interface{}, error)
 	Update(context.Context, interface{}, interface{}) (interface{}, error)
 	UpdateMany(context.Context, interface{}, interface{}) (interface{}, error)
 	Delete(context.Context, interface{}) (interface{}, error)

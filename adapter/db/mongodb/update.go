@@ -2,7 +2,6 @@ package mongodb
 
 import (
 	"context"
-	"errors"
 )
 
 // Update the single matched doc by query, with the diff. "update".
@@ -11,7 +10,7 @@ func (me *Mongo) Update(
 	query interface{},
 	update interface{},
 ) (interface{}, error) {
-	return nil, errors.New("Not Implemented Yet")
+	return me.col.UpdateOne(ctx, query, update)
 }
 
 // UpdateMany the all matched docs by query, with the diff. "update".
@@ -20,5 +19,5 @@ func (me *Mongo) UpdateMany(
 	query interface{},
 	update interface{},
 ) (interface{}, error) {
-	return nil, errors.New("Not Implemented Yet")
+	return me.col.UpdateMany(ctx, query, update)
 }

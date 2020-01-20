@@ -62,8 +62,7 @@ var _ = Describe("InsertMany", func() {
 		cur, err := col.Find(findCtx, bson.M{"_id": bson.M{"$in": ids}})
 		Expect(err).Should(Succeed())
 		var acdoc []*Sample
-		err = cur.All(findCtx, &acdoc)
-		Expect(err).To(Succeed())
+		Expect(cur.All(findCtx, &acdoc)).To(Succeed())
 		Expect(acdoc).To(ConsistOf(docs))
 	})
 })
