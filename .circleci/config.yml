@@ -6,6 +6,7 @@ jobs:
         environment:
           GO111MODULE: 'on'
       - image: mongo
+        name: mongo
         environment:
           MONGO_INITDB_ROOT_USERNAME: adapter
           MONGO_INITDB_ROOT_PASSWORD: adapter
