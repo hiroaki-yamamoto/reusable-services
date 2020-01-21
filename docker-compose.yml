@@ -18,3 +18,10 @@ services:
       - ".:/opt/code"
     depends_on:
       - mongo
+  random:
+    build:
+      context: .
+      args:
+        PKGNAME: random
+    volumes:
+      - ".:/opt/code"
