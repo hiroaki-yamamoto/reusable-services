@@ -1,6 +1,8 @@
 package random_test
 
 import (
+	"fmt"
+
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
@@ -8,16 +10,41 @@ import (
 )
 
 var _ = Describe("Text", func() {
-	It("Shoud generate a random text", func() {
-		txts := make([]string, 20)
+	Context("With random seed text", func() {
 		const size = 20
-		for i := range txts {
-			txt := genTxt(size)
-			for _, v := range txts[:i] {
-				Expect(len(txt)).To(BeEquivalentTo(size))
-				Expect(txt).NotTo(Equal(v))
+		const randomSeedTxt = "abcd"
+		var exp string
+		BeforeEach(func() {
+			exp = fmt.Sprintf("^[a-d]{%d}$", size)
+		})
+		It("Shoud generate a random text", func() {
+			txts := make([]string, size)
+			for i := range txts {
+				txt, err := GenTxt(size, randomSeedTxt)
+				Expect(err).To(Succeed())
+				for _, v := range txts[:i] {
+					Expect(txt).To(MatchRegexp(exp))
+					Expect(txt).NotTo(Equal(v))
+				}
+				txts[i] = txt
 			}
-			txts[i] = txt
-		}
+		})
+	})
+	Context("Without random seed text", func() {
+		const size = 20
+		It("Shoud generate a random text", func() {
+			txts := make([]string, size)
+			for i := range txts {
+				txt, err := GenTxt(size)
+				Expect(err).To(Succeed())
+				for _, v := range txts[:i] {
+					Expect(txt).To(MatchRegexp(
+						fmt.Sprintf("^[a-zA-Z0-9]{%d}$", size)),
+					)
+					Expect(txt).NotTo(Equal(v))
+				}
+				txts[i] = txt
+			}
+		})
 	})
 })

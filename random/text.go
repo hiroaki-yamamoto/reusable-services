@@ -3,7 +3,8 @@ package random
 import "strings"
 import "math/rand"
 
-func genTxt(size int, baseTxts ...string) (txt string, err error) {
+// GenTxt generates a random text with the specified size,
+func GenTxt(size int, baseTxts ...string) (txt string, err error) {
 	var builder strings.Builder
 	if len(baseTxts) > 0 {
 		for _, base := range baseTxts {
@@ -13,7 +14,7 @@ func genTxt(size int, baseTxts ...string) (txt string, err error) {
 		}
 	} else {
 		if _, err = builder.WriteString(
-			"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+			"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
 		); err != nil {
 			return
 		}
