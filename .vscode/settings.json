@@ -2,6 +2,8 @@
   "files.exclude": {
     "adapter": true,
     "token": true,
-    "random": true
+    "random": true,
+    "timeout": true,
+    "errors": true
   }
 }

@@ -2,11 +2,11 @@
 	"folders": [
 		{
 			"path": ".",
-			"name": "Reusable Services"
+			"name": "root"
 		},
 		{
 			"path": "token",
-			"name": "Token Service"
+			"name": "Token"
 		},
 		{
 			"path": "adapter",
@@ -14,8 +14,16 @@
 		},
 		{
 			"path": "random",
-			"name": "Random Utilities"
-		}
+			"name": "Random"
+		},
+		{
+			"path": "timeout",
+			"name": "Timeout"
+		},
+		{
+			"path": "errors",
+			"name": "Errors"
+		},
 	],
 	"settings": {}
 }
