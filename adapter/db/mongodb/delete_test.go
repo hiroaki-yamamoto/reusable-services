@@ -7,40 +7,38 @@ import (
 	. "github.com/onsi/gomega"
 	"go.mongodb.org/mongo-driver/bson"
 	pr "go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
 var _ = Describe("Delete", func() {
-	var chosenID pr.ObjectID
+	var chosenDoc *Sample
 	BeforeEach(func() {
-		randomDct := samples[rand.Intn(len(samples))]
-		chosenID = randomDct.ID
+		chosenDoc = samples[rand.Intn(len(samples))]
 	})
 	It("Delete should work", func() {
 		delCtx, cancelDel := TimeoutContext()
 		defer cancelDel()
-		resInt, err := adapter.Delete(delCtx, bson.M{"_id": chosenID})
-		Expect(err).To(Succeed())
-		res, ok := resInt.(*mongo.DeleteResult)
-		Expect(ok).To(BeTrue())
-		Expect(res.DeletedCount).To(BeNumerically("==", 1))
+		deleteCount, err := adapter.Delete(delCtx, chosenDoc)
+		Expect(deleteCount).To(BeNumerically("==", 1))
 		findCtx, cancelFind := TimeoutContext()
 		defer cancelFind()
-		num, err := col.CountDocuments(findCtx, bson.M{"_id": chosenID})
+		num, err := col.CountDocuments(findCtx, chosenDoc)
 		Expect(err).To(Succeed())
 		Expect(num).To(BeNumerically("==", 0))
 	})
 })
 
 var _ = Describe("Delete Many", func() {
+	var chosenDocs []interface{}
 	var chosenID []pr.ObjectID
 	BeforeEach(func() {
-		chosenID = make([]pr.ObjectID, 5)
+		chosenDocs = make([]interface{}, 5)
+		chosenID = make([]pr.ObjectID, len(chosenDocs))
 		for i := range chosenID {
 			var id pr.ObjectID
 			for ContainObjectID(id, chosenID) {
-				randomDct := samples[rand.Intn(len(samples))]
-				id = randomDct.ID
+				doc := samples[rand.Intn(len(samples))]
+				chosenDocs[i] = doc
+				id = doc.ID
 			}
 			chosenID[i] = id
 		}
@@ -48,13 +46,9 @@ var _ = Describe("Delete Many", func() {
 	It("DeleteMany should work", func() {
 		delCtx, cancelDel := TimeoutContext()
 		defer cancelDel()
-		resInt, err := adapter.DeleteMany(
-			delCtx, bson.M{"_id": bson.M{"$in": chosenID}},
-		)
+		deleteCount, err := adapter.DeleteMany(delCtx, chosenDocs)
 		Expect(err).To(Succeed())
-		res, ok := resInt.(*mongo.DeleteResult)
-		Expect(ok).To(BeTrue())
-		Expect(res.DeletedCount).To(BeNumerically("==", len(chosenID)))
+		Expect(deleteCount).To(BeNumerically("==", len(chosenDocs)))
 		findCtx, cancelFind := TimeoutContext()
 		defer cancelFind()
 		num, err := col.CountDocuments(
