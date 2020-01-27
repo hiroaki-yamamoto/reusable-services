@@ -7,7 +7,6 @@ import (
 	. "github.com/onsi/gomega"
 	"go.mongodb.org/mongo-driver/bson"
 	pr "go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
 var _ = Describe("Insert", func() {
@@ -16,11 +15,9 @@ var _ = Describe("Insert", func() {
 		doc := &Sample{ID: id, Number: 0, Meta: "Inserted Doc"}
 		ctx, stop := TimeoutContext()
 		defer stop()
-		resInt, err := adapter.Insert(ctx, doc)
+		insID, err := adapter.Insert(ctx, doc)
 		Expect(err).To(Succeed())
-		res, ok := resInt.(*mongo.InsertOneResult)
-		Expect(ok).To(BeTrue())
-		Expect(res.InsertedID).To(Equal(id))
+		Expect(insID).To(Equal(id))
 		findCtx, stopFind := TimeoutContext()
 		defer stopFind()
 		findRes := col.FindOne(findCtx, bson.M{"_id": id})
@@ -52,11 +49,9 @@ var _ = Describe("InsertMany", func() {
 	It("Can perform bulk insert", func() {
 		ctx, stop := TimeoutContext()
 		defer stop()
-		resInt, err := adapter.InsertMany(ctx, toInsert)
+		insIDs, err := adapter.InsertMany(ctx, toInsert)
 		Expect(err).To(Succeed())
-		res, ok := resInt.(*mongo.InsertManyResult)
-		Expect(ok).To(BeTrue())
-		Expect(res.InsertedIDs).To(ConsistOf(ids))
+		Expect(insIDs).To(ConsistOf(ids))
 		findCtx, stopFind := TimeoutContext()
 		defer stopFind()
 		cur, err := col.Find(findCtx, bson.M{"_id": bson.M{"$in": ids}})

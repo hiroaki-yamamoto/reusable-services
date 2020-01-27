@@ -30,15 +30,8 @@ var _ = Describe("Find", func() {
 	It("Should find the correct documents.", func() {
 		ctx, cancel := TimeoutContext()
 		defer cancel()
-		curInt, err := adapter.Find(ctx, bson.M{"_id": bson.M{"$in": chosenIDs}})
+		docs, err := adapter.Find(ctx, bson.M{"_id": bson.M{"$in": chosenIDs}})
 		Expect(err).To(Succeed())
-		cur, ok := curInt.(*mongo.Cursor)
-		Expect(ok).To(BeTrue())
-		defer cur.Close(ctx)
-		ctx, stop := TimeoutContext()
-		defer stop()
-		var docs []*Sample
-		Expect(cur.All(ctx, &docs)).To(Succeed())
 		Expect(docs).To(ConsistOf(chosenDocs))
 	})
 })

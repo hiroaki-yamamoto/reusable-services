@@ -7,7 +7,6 @@ import (
 	. "github.com/onsi/gomega"
 	"go.mongodb.org/mongo-driver/bson"
 	pr "go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
 var _ = Describe("Update One", func() {
@@ -23,11 +22,10 @@ var _ = Describe("Update One", func() {
 		ctx, stop := TimeoutContext()
 		defer stop()
 		q := bson.M{"_id": id}
-		resInt, err := adapter.Update(
+		res, err := adapter.Update(
 			ctx, q, bson.M{"$set": bson.M{"meta": doc.Meta}},
 		)
 		Expect(err).To(Succeed())
-		res := resInt.(*mongo.UpdateResult)
 		Expect(res.ModifiedCount).To(BeEquivalentTo(1))
 		findCtx, stopFind := TimeoutContext()
 		defer stopFind()
@@ -61,11 +59,9 @@ var _ = Describe("Update Many", func() {
 		ctx, stop := TimeoutContext()
 		defer stop()
 		q := bson.M{"_id": bson.M{"$in": chosenID}}
-		resInt, err := adapter.UpdateMany(
+		res, err := adapter.UpdateMany(
 			ctx, q, bson.M{"$set": bson.M{"meta": "updated"}},
 		)
-		Expect(err).To(Succeed())
-		res := resInt.(*mongo.UpdateResult)
 		Expect(res.ModifiedCount).To(BeEquivalentTo(len(chosenID)))
 		findCtx, stopFind := TimeoutContext()
 		defer stopFind()

@@ -12,7 +12,18 @@ import (
 func (me *Mongo) Delete(
 	ctx context.Context, doc interface{},
 ) (count int64, err error) {
-	if res, err := me.col.DeleteOne(ctx, doc); err == nil {
+	var data []byte
+	data, err = bson.Marshal(doc)
+	if err != nil {
+		return
+	}
+	var docMap bson.M
+	if err = bson.Unmarshal(data, &docMap); err != nil {
+		return
+	}
+	if res, err := me.col.DeleteOne(
+		ctx, bson.M{"_id": docMap["_id"]},
+	); err == nil {
 		count = res.DeletedCount
 	}
 	return
