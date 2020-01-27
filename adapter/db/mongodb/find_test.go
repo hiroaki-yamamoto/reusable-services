@@ -7,7 +7,6 @@ import (
 	. "github.com/onsi/gomega"
 	"go.mongodb.org/mongo-driver/bson"
 	pr "go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
 var _ = Describe("Find", func() {
@@ -30,8 +29,10 @@ var _ = Describe("Find", func() {
 	It("Should find the correct documents.", func() {
 		ctx, cancel := TimeoutContext()
 		defer cancel()
-		docs, err := adapter.Find(ctx, bson.M{"_id": bson.M{"$in": chosenIDs}})
-		Expect(err).To(Succeed())
+		var docs []*Sample
+		Expect(
+			adapter.Find(ctx, bson.M{"_id": bson.M{"$in": chosenIDs}}, &docs),
+		).To(Succeed())
 		Expect(docs).To(ConsistOf(chosenDocs))
 	})
 })
@@ -46,13 +47,8 @@ var _ = Describe("FindOne", func() {
 	It("Should find the correct documents.", func() {
 		ctx, cancel := TimeoutContext()
 		defer cancel()
-		curInt, err := adapter.FindOne(ctx, bson.M{"_id": chosenID})
-		Expect(err).To(Succeed())
-		res, ok := curInt.(*mongo.SingleResult)
-		Expect(ok).To(BeTrue())
-		Expect(res.Err()).To(Succeed())
 		var doc *Sample
-		res.Decode(&doc)
+		Expect(adapter.FindOne(ctx, bson.M{"_id": chosenID}, &doc)).To(Succeed())
 		Expect(doc).To(Equal(chosenDoc))
 	})
 })

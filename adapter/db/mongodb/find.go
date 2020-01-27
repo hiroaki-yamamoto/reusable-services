@@ -8,10 +8,11 @@ import (
 func (me *Mongo) Find(
 	ctx context.Context,
 	query map[string]interface{},
+	docs interface{},
 	opts ...interface{},
-) (res []interface{}, err error) {
+) (err error) {
 	if cur, err := me.col.Find(ctx, query); err == nil {
-		cur.All(ctx, &res)
+		err = cur.All(ctx, docs)
 	}
 	return
 }
@@ -20,10 +21,11 @@ func (me *Mongo) Find(
 func (me *Mongo) FindOne(
 	ctx context.Context,
 	query map[string]interface{},
+	resdoc interface{},
 	opts ...interface{},
-) (res interface{}, err error) {
+) (err error) {
 	if sr := me.col.FindOne(ctx, query); sr.Err() == nil {
-		sr.Decode(&res)
+		err = sr.Decode(resdoc)
 	} else {
 		err = sr.Err()
 	}

@@ -13,11 +13,17 @@ type UpdateSummary struct {
 // IAdapter indicates the interface of the adapter.
 type IAdapter interface {
 	Find(
-		ctx context.Context, query map[string]interface{}, opts ...interface{},
-	) (docs []interface{}, err error)
+		ctx context.Context, // The context
+		query map[string]interface{}, // Query
+		docs interface{}, // Pointer to the result document
+		opts ...interface{}, // Query options
+	) (err error)
 	FindOne(
-		ctx context.Context, query map[string]interface{}, opts ...interface{},
-	) (doc interface{}, err error)
+		ctx context.Context, // The context
+		query map[string]interface{}, // Query
+		doc interface{}, // Pointer to the result document
+		opts ...interface{}, // Query options
+	) (err error)
 	Insert(
 		ctx context.Context, doc interface{},
 	) (insertedID interface{}, err error)

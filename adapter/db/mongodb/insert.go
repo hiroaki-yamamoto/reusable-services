@@ -18,7 +18,7 @@ func (me *Mongo) Insert(
 func (me *Mongo) InsertMany(
 	ctx context.Context, docs []interface{},
 ) (insertedIDs []interface{}, err error) {
-	if res, err := me.col.InsertMany(ctx, docs); err != nil {
+	if res, err := me.col.InsertMany(ctx, docs); err == nil {
 		insertedIDs = res.InsertedIDs
 	}
 	return
