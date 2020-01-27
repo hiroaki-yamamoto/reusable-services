@@ -4,26 +4,6 @@
 			"path": ".",
 			"name": "root"
 		},
-		{
-			"path": "token",
-			"name": "Token"
-		},
-		{
-			"path": "adapter",
-			"name": "Adapter"
-		},
-		{
-			"path": "random",
-			"name": "Random"
-		},
-		{
-			"path": "timeout",
-			"name": "Timeout"
-		},
-		{
-			"path": "errors",
-			"name": "Errors"
-		},
 	],
 	"settings": {}
 }

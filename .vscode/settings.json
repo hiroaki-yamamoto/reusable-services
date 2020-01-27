@@ -1,9 +1,2 @@
 {
-  "files.exclude": {
-    "adapter": true,
-    "token": true,
-    "random": true,
-    "timeout": true,
-    "errors": true
-  }
 }
