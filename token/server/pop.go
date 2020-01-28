@@ -3,7 +3,6 @@ package server
 import (
 	"context"
 
-	"github.com/hiroaki-yamamoto/reusable-services/errors"
 	"github.com/hiroaki-yamamoto/reusable-services/token/rpc"
 )
 
@@ -13,12 +12,11 @@ func (me *Server) Pop(
 ) (out *rpc.Token, err error) {
 	curCtx, cancel := me.TimeoutContext(ctx)
 	defer cancel()
-	var tokInt interface{}
-	var ok bool
-	if tokInt, err = me.adapter.FindOne(curCtx, tok); err == nil {
-		if tok, ok = tokInt.(*rpc.Token); !ok {
-			err = &errors.InvalidType{}
-		}
+	if err = me.adapter.FindOne(curCtx, map[string]interface{}{
+		"purpose": tok.GetPurpose(),
+		"token":   tok.GetToken(),
+	}, out); err == nil {
+		me.adapter.Delete(curCtx, *out)
 	}
 	return
 }
