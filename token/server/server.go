@@ -1,6 +1,7 @@
 package server
 
 import (
+	"strings"
 	"time"
 
 	"github.com/hiroaki-yamamoto/reusable-services/adapter"
@@ -11,7 +12,8 @@ import (
 type Server struct {
 	*timeout.Timeout
 	adapter       adapter.IAdapter
-	randomTxtSeed []string
+	maxAge        time.Duration
+	randomTxtSeed string
 	tokSize       int
 }
 
@@ -22,6 +24,7 @@ type Server struct {
 func New(
 	adapter adapter.IAdapter,
 	tokSize int,
+	maxAge time.Duration,
 	opTimeout time.Duration,
 	randomTxtSeed ...string,
 ) *Server {
@@ -30,7 +33,8 @@ func New(
 			Timeout: opTimeout,
 		},
 		adapter:       adapter,
-		randomTxtSeed: randomTxtSeed,
+		maxAge:        maxAge,
+		randomTxtSeed: strings.Join(randomTxtSeed, ""),
 		tokSize:       tokSize,
 	}
 }

@@ -12,11 +12,13 @@ func (me *Server) Pop(
 ) (out *rpc.Token, err error) {
 	curCtx, cancel := me.TimeoutContext(ctx)
 	defer cancel()
+	var ret rpc.Token
 	if err = me.adapter.FindOne(curCtx, map[string]interface{}{
 		"purpose": tok.GetPurpose(),
 		"token":   tok.GetToken(),
-	}, out); err == nil {
-		me.adapter.Delete(curCtx, *out)
+	}, &ret); err == nil {
+		me.adapter.Delete(curCtx, ret)
+		out = &ret
 	}
 	return
 }
