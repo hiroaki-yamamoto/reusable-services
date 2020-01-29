@@ -54,7 +54,7 @@ func (me *MockAdapter) FindOne(
 	doc interface{},
 	opts ...interface{},
 ) (err error) {
-	return me.FindFunc(ctx, query, doc, opts...)
+	return me.FindOneFunc(ctx, query, doc, opts...)
 }
 
 // Insert calls InsertFunc.
@@ -89,12 +89,12 @@ func (me *MockAdapter) UpdateMany(
 func (me *MockAdapter) Delete(
 	ctx context.Context, doc interface{},
 ) (delCount int64, err error) {
-	return me.Delete(ctx, doc)
+	return me.DeleteFunc(ctx, doc)
 }
 
 // DeleteMany calls DeleteManyFunc.
 func (me *MockAdapter) DeleteMany(
 	ctx context.Context, docs []interface{},
 ) (delCount int64, err error) {
-	return me.Delete(ctx, docs)
+	return me.DeleteManyFunc(ctx, docs)
 }

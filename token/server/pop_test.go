@@ -27,10 +27,9 @@ var _ = Describe("Pop", func() {
 			// 	"purpose": "test",
 			// 	"token":   tokenTxt,
 			// }))
-			doc = &rpc.Token{
-				Token:   query["token"].(string),
-				Purpose: query["purpose"].(string),
-			}
+			out := doc.(*rpc.Token)
+			out.Token = query["token"].(string)
+			out.Purpose = query["purpose"].(string)
 			return
 		}
 		adapter.DeleteFunc = func(

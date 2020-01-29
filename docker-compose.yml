@@ -9,6 +9,13 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: adapter
     tmpfs:
       - /data/db
+  token:
+    build:
+      context: .
+      args:
+        PKGNAME: token
+    volumes:
+      - ".:/opt/code"
   adapter-db-mongo:
     build:
       context: .
