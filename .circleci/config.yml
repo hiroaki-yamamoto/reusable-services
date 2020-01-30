@@ -143,3 +143,8 @@ workflows:
       - random:
           requires:
             -  build
+      - collect_coverage:
+          requires:
+            - mongo-adapter
+            - token
+            - random
