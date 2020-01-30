@@ -2,8 +2,10 @@ version: 2.1
 commands:
   go-test:
     parameters:
-      PKGNAME: string
-      COVNAME: string
+      PKGNAME:
+        type: string
+      COVNAME:
+        type: string
     steps:
       - run:
           name: "Fetch Global Dependencies"
@@ -130,7 +132,7 @@ jobs:
 workflows:
   version: 2
   master:
-    jons:
+    jobs:
       - build
       - mongo-adapter:
           requires:
