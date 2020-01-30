@@ -101,7 +101,7 @@ jobs:
             COVNAME: random
   collect_coverage:
     docker:
-      - image: golang:alpine
+      - image: alpine
     working_directory: ~/repo
     steps:
       - run:
