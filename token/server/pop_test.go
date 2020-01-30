@@ -23,10 +23,10 @@ var _ = Describe("Pop", func() {
 			doc interface{},
 			opts ...interface{},
 		) (err error) {
-			// Expect(query).To(ContainElements(map[string]interface{}{
-			// 	"purpose": "test",
-			// 	"token":   tokenTxt,
-			// }))
+			Expect(query).To(Equal(map[string]interface{}{
+				"purpose": "test",
+				"token":   tokenTxt,
+			}))
 			out := doc.(*rpc.Token)
 			out.Token = query["token"].(string)
 			out.Purpose = query["purpose"].(string)
