@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 DIR=$(dirname $(realpath $0))
+packagePath="github.com/hiroaki-yamamoto/token/rpc"
 
 cat > $(dirname $0)/build.ninja << EOF
 backFlags = --go_out=plugins=grpc
@@ -20,7 +21,6 @@ EOF
 for f in $(find $DIR -type f -name '*.proto'); do
 fname=$(basename -s '.proto' ${f})
 childDir=$(realpath $(dirname ${f}) --relative-to=$DIR)
-packagePath="github.com/hiroaki-yamamoto/token/rpc"
 
 cat >> $(dirname $0)/build.ninja << EOF
 

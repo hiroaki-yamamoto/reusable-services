@@ -5,6 +5,10 @@ option go_package = "github.com/hiroaki-yamamoto/token/rpc";
 
 import "model.proto";
 
+message CleanupResult {
+  int64 num_delete_token = 1;
+}
+
 service Token {
   rpc Push(token.models.Token) returns (token.models.Token);
   rpc Pop(token.models.Token) returns (token.models.Token);
