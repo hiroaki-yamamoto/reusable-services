@@ -6,6 +6,7 @@ import (
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"go.mongodb.org/mongo-driver/bson"
 
 	"github.com/hiroaki-yamamoto/reusable-services/errors"
 	"github.com/hiroaki-yamamoto/reusable-services/random"
@@ -36,9 +37,9 @@ var _ = Describe("Pop", func() {
 				doc interface{},
 				opts ...interface{},
 			) (err error) {
-				query, ok := q.(map[string]interface{})
+				query, ok := q.(bson.M)
 				Expect(ok).To(BeTrue())
-				Expect(query).To(Equal(map[string]interface{}{
+				Expect(query).To(Equal(bson.M{
 					"purpose": "test",
 					"token":   tokenTxt,
 				}))
@@ -69,9 +70,9 @@ var _ = Describe("Pop", func() {
 				doc interface{},
 				opts ...interface{},
 			) (err error) {
-				query, ok := q.(map[string]interface{})
+				query, ok := q.(bson.M)
 				Expect(ok).To(BeTrue())
-				Expect(query).To(Equal(map[string]interface{}{
+				Expect(query).To(Equal(bson.M{
 					"purpose": "test",
 					"token":   tokenTxt,
 				}))

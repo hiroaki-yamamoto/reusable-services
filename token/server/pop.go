@@ -6,6 +6,7 @@ import (
 
 	"github.com/hiroaki-yamamoto/reusable-services/errors"
 	"github.com/hiroaki-yamamoto/reusable-services/token/rpc"
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 // Pop token.
@@ -15,7 +16,7 @@ func (me *Server) Pop(
 	curCtx, cancel := me.TimeoutContext(ctx)
 	defer cancel()
 	var res Model
-	if err = me.adapter.FindOne(curCtx, map[string]interface{}{
+	if err = me.adapter.FindOne(curCtx, bson.M{
 		"purpose": tok.GetPurpose(),
 		"token":   tok.GetToken(),
 	}, &res); err == nil {
