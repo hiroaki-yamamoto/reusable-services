@@ -14,13 +14,13 @@ type UpdateSummary struct {
 type IAdapter interface {
 	Find(
 		ctx context.Context, // The context
-		query map[string]interface{}, // Query
+		query interface{}, // Query
 		docs interface{}, // Pointer to the result document
 		opts ...interface{}, // Query options
 	) (err error)
 	FindOne(
 		ctx context.Context, // The context
-		query map[string]interface{}, // Query
+		query interface{}, // Query
 		doc interface{}, // Pointer to the result document
 		opts ...interface{}, // Query options
 	) (err error)
@@ -36,6 +36,6 @@ type IAdapter interface {
 	UpdateMany(
 		ctx context.Context, query interface{}, update interface{},
 	) (res *UpdateSummary, err error)
-	Delete(ctx context.Context, doc interface{}) (delCount int64, err error)
-	DeleteMany(ctx context.Context, docs []interface{}) (delCount int64, err error)
+	Delete(ctx context.Context, filter interface{}) (delCount int64, err error)
+	DeleteMany(ctx context.Context, filter interface{}) (delCount int64, err error)
 }

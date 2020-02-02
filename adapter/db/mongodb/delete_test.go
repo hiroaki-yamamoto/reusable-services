@@ -46,7 +46,9 @@ var _ = Describe("Delete Many", func() {
 	It("DeleteMany should work", func() {
 		delCtx, cancelDel := TimeoutContext()
 		defer cancelDel()
-		deleteCount, err := adapter.DeleteMany(delCtx, chosenDocs)
+		deleteCount, err := adapter.DeleteMany(
+			delCtx, bson.M{"_id": bson.M{"$in": chosenID}},
+		)
 		Expect(err).To(Succeed())
 		Expect(deleteCount).To(BeNumerically("==", len(chosenDocs)))
 		findCtx, cancelFind := TimeoutContext()

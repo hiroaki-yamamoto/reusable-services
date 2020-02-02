@@ -7,7 +7,7 @@ import (
 // Find finds documents by the specified query.
 func (me *Mongo) Find(
 	ctx context.Context,
-	query map[string]interface{},
+	query interface{},
 	docs interface{},
 	opts ...interface{},
 ) (err error) {
@@ -20,7 +20,7 @@ func (me *Mongo) Find(
 // FindOne finds a document by the specified query
 func (me *Mongo) FindOne(
 	ctx context.Context,
-	query map[string]interface{},
+	query interface{},
 	resdoc interface{},
 	opts ...interface{},
 ) (err error) {

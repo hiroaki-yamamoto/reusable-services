@@ -7,13 +7,13 @@ import adp "github.com/hiroaki-yamamoto/reusable-services/adapter"
 type MockAdapter struct {
 	FindFunc func(
 		ctx context.Context,
-		query map[string]interface{},
+		query interface{},
 		docs interface{},
 		opts ...interface{},
 	) (err error)
 	FindOneFunc func(
 		ctx context.Context,
-		query map[string]interface{},
+		query interface{},
 		doc interface{},
 		opts ...interface{},
 	) (err error)
@@ -30,17 +30,17 @@ type MockAdapter struct {
 		ctx context.Context, query interface{}, update interface{},
 	) (res *adp.UpdateSummary, err error)
 	DeleteFunc func(
-		ctx context.Context, doc interface{},
+		ctx context.Context, filter interface{},
 	) (delCount int64, err error)
 	DeleteManyFunc func(
-		ctx context.Context, docs []interface{},
+		ctx context.Context, filter interface{},
 	) (delCount int64, err error)
 }
 
 // Find calls FindFunc.
 func (me *MockAdapter) Find(
 	ctx context.Context,
-	query map[string]interface{},
+	query interface{},
 	docs interface{},
 	opts ...interface{},
 ) (err error) {
@@ -50,7 +50,7 @@ func (me *MockAdapter) Find(
 // FindOne calls FindOneFunc.
 func (me *MockAdapter) FindOne(
 	ctx context.Context,
-	query map[string]interface{},
+	query interface{},
 	doc interface{},
 	opts ...interface{},
 ) (err error) {
@@ -87,14 +87,14 @@ func (me *MockAdapter) UpdateMany(
 
 // Delete calls DeleteFunc.
 func (me *MockAdapter) Delete(
-	ctx context.Context, doc interface{},
+	ctx context.Context, filter interface{},
 ) (delCount int64, err error) {
-	return me.DeleteFunc(ctx, doc)
+	return me.DeleteFunc(ctx, filter)
 }
 
 // DeleteMany calls DeleteManyFunc.
 func (me *MockAdapter) DeleteMany(
-	ctx context.Context, docs []interface{},
+	ctx context.Context, filter interface{},
 ) (delCount int64, err error) {
-	return me.DeleteManyFunc(ctx, docs)
+	return me.DeleteManyFunc(ctx, filter)
 }

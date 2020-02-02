@@ -18,24 +18,26 @@ var _ = Describe("Pop", func() {
 	var tokenTxt string
 	BeforeEach(func() {
 		adapter.DeleteFunc = func(
-			ctx context.Context, doc interface{},
+			ctx context.Context, query interface{},
 		) (delCount int64, err error) {
 			deleted = true
 			delCount = 1
 			return
 		}
 	})
-	Context("For not-rotted token.", func() {
+	Context("For non-rotted token.", func() {
 		BeforeEach(func() {
 			var err error
 			tokenTxt, err = random.GenTxt(tokenSize)
 			Expect(err).To(Succeed())
 			adapter.FindOneFunc = func(
 				ctx context.Context,
-				query map[string]interface{},
+				q interface{},
 				doc interface{},
 				opts ...interface{},
 			) (err error) {
+				query, ok := q.(map[string]interface{})
+				Expect(ok).To(BeTrue())
 				Expect(query).To(Equal(map[string]interface{}{
 					"purpose": "test",
 					"token":   tokenTxt,
@@ -63,10 +65,12 @@ var _ = Describe("Pop", func() {
 		BeforeEach(func() {
 			adapter.FindOneFunc = func(
 				ctx context.Context,
-				query map[string]interface{},
+				q interface{},
 				doc interface{},
 				opts ...interface{},
 			) (err error) {
+				query, ok := q.(map[string]interface{})
+				Expect(ok).To(BeTrue())
 				Expect(query).To(Equal(map[string]interface{}{
 					"purpose": "test",
 					"token":   tokenTxt,
