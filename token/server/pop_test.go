@@ -7,6 +7,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"go.mongodb.org/mongo-driver/bson"
+	pr "go.mongodb.org/mongo-driver/bson/primitive"
 
 	"github.com/hiroaki-yamamoto/reusable-services/errors"
 	"github.com/hiroaki-yamamoto/reusable-services/random"
@@ -26,6 +27,25 @@ var _ = Describe("Pop", func() {
 			return
 		}
 	})
+	Context("For not found token.", func() {
+		BeforeEach(func() {
+			adapter.FindOneFunc = func(
+				ctx context.Context,
+				q interface{},
+				doc interface{},
+				opts ...interface{},
+			) (err error) {
+				doc = nil
+				return
+			}
+		})
+		It("Should Raise NotFound", func() {
+			res, err := svr.Pop(rootCtx, &rpc.Token{Token: tokenTxt, Purpose: "test"})
+			Expect(res).To(BeNil())
+			Expect(err).To(MatchError(&errors.NotFound{}))
+			Expect(deleted).To(BeFalse())
+		})
+	})
 	Context("For non-rotted token.", func() {
 		BeforeEach(func() {
 			var err error
@@ -44,6 +64,7 @@ var _ = Describe("Pop", func() {
 					"token":   tokenTxt,
 				}))
 				out := doc.(*server.Model)
+				out.ID = pr.NewObjectID()
 				out.Token = &rpc.Token{
 					Email:   "hello@example.com",
 					Token:   query["token"].(string),
@@ -77,6 +98,7 @@ var _ = Describe("Pop", func() {
 					"token":   tokenTxt,
 				}))
 				out := doc.(*server.Model)
+				out.ID = pr.NewObjectID()
 				out.Token = &rpc.Token{
 					Email:   "hello@example.com",
 					Token:   query["token"].(string),

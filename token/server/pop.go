@@ -19,13 +19,13 @@ func (me *Server) Pop(
 	if err = me.adapter.FindOne(curCtx, bson.M{
 		"purpose": tok.GetPurpose(),
 		"token":   tok.GetToken(),
-	}, &res); err == nil {
+	}, &res); err == nil && !res.ID.IsZero() {
 		me.adapter.Delete(curCtx, res)
 		if res.Expires.After(time.Now().UTC()) {
 			out = res.Token
-		} else {
-			err = &errors.NotFound{}
+			return
 		}
 	}
+	err = &errors.NotFound{}
 	return
 }
