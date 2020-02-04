@@ -11,5 +11,6 @@ import (
 type Model struct {
 	ID pr.ObjectID `bson:"_id"`
 	*rpc.Token
+	Email   string `validator:"email"`
 	Expires time.Time
 }
