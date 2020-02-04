@@ -17,6 +17,7 @@ const tokMaxAge = 48 * time.Hour
 var adapter *adpMocks.MockAdapter
 var svr *server.Server
 var rootCtx context.Context
+var now = time.Now().UTC()
 
 func TestServer(t *testing.T) {
 	RegisterFailHandler(Fail)
@@ -30,4 +31,5 @@ var _ = BeforeSuite(func() {
 var _ = BeforeEach(func() {
 	adapter = &adpMocks.MockAdapter{}
 	svr = server.New(adapter, tokenSize, tokMaxAge, 1*time.Second)
+	svr.Now = func() time.Time { return now }
 })

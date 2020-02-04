@@ -15,6 +15,7 @@ type Server struct {
 	maxAge        time.Duration
 	randomTxtSeed string
 	tokSize       int
+	Now           func() time.Time
 }
 
 // New creates a new Token RPC Server Instance.
@@ -36,5 +37,6 @@ func New(
 		maxAge:        maxAge,
 		randomTxtSeed: strings.Join(randomTxtSeed, ""),
 		tokSize:       tokSize,
+		Now:           func() time.Time { return time.Now().UTC() },
 	}
 }

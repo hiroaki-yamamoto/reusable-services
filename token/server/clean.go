@@ -2,7 +2,6 @@ package server
 
 import (
 	"context"
-	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
 )
@@ -12,8 +11,6 @@ func (me *Server) CleanRottedToken() {
 	ctx, stop := me.TimeoutContext(context.Background())
 	defer stop()
 	me.adapter.DeleteMany(ctx, bson.M{
-		"expires": bson.M{
-			"$lt": time.Now().UTC(),
-		},
+		"expires": bson.M{"$lt": me.Now()},
 	})
 }

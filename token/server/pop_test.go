@@ -26,6 +26,14 @@ var _ = Describe("Pop", func() {
 			delCount = 1
 			return
 		}
+		adapter.DeleteManyFunc = func(
+			ctx context.Context, filter interface{},
+		) (delCount int64, err error) {
+			Expect(filter).To(BeEquivalentTo(bson.M{
+				"expires": bson.M{"$lt": now},
+			}))
+			return 0, nil
+		}
 	})
 	Context("For not found token.", func() {
 		BeforeEach(func() {

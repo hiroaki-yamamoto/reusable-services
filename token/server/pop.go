@@ -15,6 +15,7 @@ func (me *Server) Pop(
 ) (out *rpc.Token, err error) {
 	curCtx, cancel := me.TimeoutContext(ctx)
 	defer cancel()
+	me.CleanRottedToken()
 	var res Model
 	if err = me.adapter.FindOne(curCtx, bson.M{
 		"purpose": tok.GetPurpose(),
