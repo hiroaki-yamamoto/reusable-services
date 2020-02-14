@@ -7,8 +7,8 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	. "github.com/hiroaki-yamamoto/reusable-services/token/server"
 	"github.com/hiroaki-yamamoto/reusable-services/token/rpc"
+	. "github.com/hiroaki-yamamoto/reusable-services/token/server"
 )
 
 var _ = Describe("Push", func() {
@@ -30,12 +30,22 @@ var _ = Describe("Push", func() {
 		}
 	})
 	Context("Without duplicated token", func() {
-		ctx, stop := context.WithTimeout(rootCtx, 1 * time.Second)
-		defer stop()
-		svr.Push(ctx, &rpc.Token{
-			Email: "test@example.com",
-			Purpose: "test",
-			Meta: interface[],
+		var tok *rpc.Token
+		BeforeEach(func() {
+			tok = &rpc.Token{
+				Email:   "test@example.com",
+				Purpose: "test",
+				Meta:    []byte("Hello world"),
+			}
+		})
+		It("Should push the token", func() {
+			ctx, stop := context.WithTimeout(rootCtx, 1*time.Second)
+			defer stop()
+			ret, err := svr.Push(ctx, tok)
+			Expect(err).To(Succeed())
+			Expect(ret.GetToken()).To(MatchRegexp("^[a-zA-Z0-9]{32}$"))
+			tok.Token = ret.GetToken()
+			Expect(ret).To(Equal(tok))
 		})
 	})
 })

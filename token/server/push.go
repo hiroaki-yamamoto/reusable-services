@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"errors"
 
 	"github.com/hiroaki-yamamoto/reusable-services/random"
 	"github.com/hiroaki-yamamoto/reusable-services/token/rpc"
@@ -12,6 +13,12 @@ import (
 func (me *Server) Push(ctx context.Context, tok *rpc.Token) (
 	ret *rpc.Token, err error,
 ) {
+	if tok == nil {
+		err = errors.New("tok must not be nil.")
+		return
+	}
+	processCtx, stop := me.TimeoutContext(ctx)
+	defer stop()
 	if tok.Token, err = random.GenTxt(32, me.randomTxtSeed); err != nil {
 		return
 	}
@@ -23,4 +30,14 @@ func (me *Server) Push(ctx context.Context, tok *rpc.Token) (
 	if err = me.Validator.Struct(model); err != nil {
 		return
 	}
+	if len(model.Token.GetToken()) < 1 {
+		if err = model.GenerateToken(me.tokSize, me.randomTxtSeed); err != nil {
+			return
+		}
+	}
+	if _, err = me.adapter.Insert(processCtx, model); err != nil {
+		return
+	}
+	ret = model.Token
+	return
 }

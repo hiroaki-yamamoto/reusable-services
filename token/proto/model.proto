@@ -4,11 +4,9 @@ package token.models;
 
 option go_package = "github.com/hiroaki-yamamoto/token/rpc";
 
-import "google/protobuf/any.proto";
-
 message Token {
   string email = 1;
   string token = 2;
   string purpose = 3;
-  map<string, google.protobuf.Any> meta = 4;
+  bytes meta = 4;
 }
