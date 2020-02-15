@@ -16,7 +16,7 @@ type Model struct {
 	Expires time.Time
 }
 
-// Generate token generats a new token for Token.Token
+// GenerateToken generats a new token for Token.Token
 func (me *Model) GenerateToken(size int, txtMap ...string) (err error) {
 	me.Token.Token, err = random.GenTxt(size, txtMap...)
 	return

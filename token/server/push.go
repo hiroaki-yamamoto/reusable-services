@@ -14,7 +14,7 @@ func (me *Server) Push(ctx context.Context, tok *rpc.Token) (
 	ret *rpc.Token, err error,
 ) {
 	if tok == nil {
-		err = errors.New("tok must not be nil.")
+		err = errors.New("Tok must not be nil")
 		return
 	}
 	processCtx, stop := me.TimeoutContext(ctx)

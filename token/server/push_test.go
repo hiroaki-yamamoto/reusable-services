@@ -12,7 +12,13 @@ import (
 )
 
 var _ = Describe("Push", func() {
+	var tok *rpc.Token
 	BeforeEach(func() {
+		tok = &rpc.Token{
+			Email:   "test@example.com",
+			Purpose: "test",
+			Meta:    []byte("Hello world"),
+		}
 		adapter.FindOneFunc = func(
 			ctx context.Context,
 			query interface{},
@@ -30,14 +36,6 @@ var _ = Describe("Push", func() {
 		}
 	})
 	Context("Without duplicated token", func() {
-		var tok *rpc.Token
-		BeforeEach(func() {
-			tok = &rpc.Token{
-				Email:   "test@example.com",
-				Purpose: "test",
-				Meta:    []byte("Hello world"),
-			}
-		})
 		It("Should push the token", func() {
 			ctx, stop := context.WithTimeout(rootCtx, 1*time.Second)
 			defer stop()
@@ -47,5 +45,8 @@ var _ = Describe("Push", func() {
 			tok.Token = ret.GetToken()
 			Expect(ret).To(Equal(tok))
 		})
+	})
+	Context("With duplicated token", func() {
+
 	})
 })
