@@ -10,9 +10,9 @@ import (
 
 // Model represents a model to store a token.
 type Model struct {
-	ID pr.ObjectID `bson:"_id"`
 	*rpc.Token
-	Email   string `validator:"email"`
+	ID      pr.ObjectID `bson:"_id"`
+	Email   string      `validator:"email"`
 	Expires time.Time
 }
 
