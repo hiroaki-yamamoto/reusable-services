@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package render;
+option go_package = "github.com/hiroaki-yamamoto/render/rpc";
+
+import "models.proto";
+
+service TemplateService {
+  rpc render(render.RenderingRequest) returns (RenderingResponse);
+}

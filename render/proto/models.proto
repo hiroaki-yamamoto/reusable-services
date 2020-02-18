@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package render;
+option go_package = "github.com/hiroaki-yamamoto/render/rpc";
+
+message RenderingRequest {
+  // Template rendering data
+  string data = 1;
+  // argument data encoded with MessagePack
+  // Note, this field is passed as "keyword arguments" to the template.
+  bytes argumentMap = 2;
+}
+
+message RenderingResponse {
+  string data = 1;
+}

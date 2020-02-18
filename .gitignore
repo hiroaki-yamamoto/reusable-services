@@ -15,3 +15,7 @@
 # vendor/
 
 *.cov
+.ninja_deps
+.ninja_log
+build.ninja
+tmp
