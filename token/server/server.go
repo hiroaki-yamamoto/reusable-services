@@ -4,9 +4,9 @@ import (
 	"strings"
 	"time"
 
+	vld "github.com/go-playground/validator/v10"
 	"github.com/hiroaki-yamamoto/reusable-services/adapter"
 	"github.com/hiroaki-yamamoto/reusable-services/timeout"
-	vld "gopkg.in/go-playground/validator.v9"
 )
 
 // Server is a Token RPC Implementation structure.
