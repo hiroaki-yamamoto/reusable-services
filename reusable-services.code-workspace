@@ -8,6 +8,9 @@
 	"settings": {
 		"protoc": {
 			"options": ["-I", "."]
-		}
+		},
+		"python.linting.mypyEnabled": true,
+		"python.linting.flake8Enabled": true,
+		"python.pythonPath": "venv/bin/python3"
 	}
 }
