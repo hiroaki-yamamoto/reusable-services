@@ -1,0 +1,30 @@
+{
+  "name": "reusable-services",
+  "version": "0.0.0",
+  "description": "Resusable Services",
+  "main": "null",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hiroaki-yamamoto/reusable-services.git"
+  },
+  "keywords": [
+    "Microservice",
+    "Framework"
+  ],
+  "author": "Hiroaki Yamamoto",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hiroaki-yamamoto/reusable-services/issues"
+  },
+  "homepage": "https://github.com/hiroaki-yamamoto/reusable-services#readme",
+  "dependencies": {
+    "@grpc/proto-loader": "^0.5.3",
+    "google-protobuf": "^3.11.4",
+    "grpc": "^1.24.2",
+    "pug": "^2.0.4"
+  },
+  "devDependencies": {}
+}
