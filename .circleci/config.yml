@@ -40,8 +40,9 @@ commands:
               --prefix github.com/hiroaki-yamamoto/${CIRCLE_PROJECT_REPONAME} \
               -o /tmp/coverages/<<parameters.COVNAME>>.json
       - persist_to_workspace:
-          root: /tmp/coverages
-          paths: <<parameters.COVNAME>>.json
+          root: /tmp
+          paths:
+            - coverages/<<parameters.COVNAME>>.json
 jobs:
   build:
     docker:
@@ -118,7 +119,7 @@ jobs:
           name: "Make Coverage Storage"
           command: mkdir -p /tmp/coverages
       - attach_workspace:
-          at: /tmp/coverages
+          at: /tmp
       - run: ls /tmp/coverages/
       - run:
           name: "Combine Coverages"
