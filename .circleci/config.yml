@@ -120,7 +120,6 @@ jobs:
           command: mkdir -p /tmp/coverages
       - attach_workspace:
           at: /tmp
-      - run: ls /tmp/coverages/
       - run:
           name: "Combine Coverages"
           command: |
