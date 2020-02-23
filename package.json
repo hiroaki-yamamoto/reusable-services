@@ -26,5 +26,27 @@
     "grpc": "^1.24.2",
     "pug": "^2.0.4"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "renovate": {
+    "extends": [
+      "config:base",
+      "schedule:weekends"
+    ],
+    "rangeStrategy": "replace",
+    "lockFileMaintenance": {
+      "enabled": true
+    },
+    "assignees": [
+      "hiroaki-yamamoto"
+    ],
+    "reviewers": [
+      "hiroaki-yamamoto"
+    ],
+    "groupName": "Updates",
+    "automerge": true,
+    "major": {
+      "automerge": false,
+      "groupName": "Major Updates"
+    }
+  }
 }
