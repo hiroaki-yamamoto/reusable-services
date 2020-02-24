@@ -1,9 +1,20 @@
 [tool.poetry]
 name = "reusable-services"
 version = "0.1.0"
-description = "A reusable services"
+description = "A Reusable Services writting in Various Languages."
 authors = ["Hiroaki Yamamoto <hiroaki@hysoftware.net>"]
 license = "MIT"
+repository = "https://github.com/hiroaki-yamamoto/reusable-services.git"
+keywords = ["microservice", "framework"]
+classifiers = [
+  "Development Status :: 1 - Planning",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Go",
+]
+packages = [
+  { include = "render/**/*.py" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.8"

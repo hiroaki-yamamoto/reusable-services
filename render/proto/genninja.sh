@@ -19,6 +19,12 @@ rule genPy
 
 rule mv
   command = mv \$in \$out
+
+rule getInitPy
+  command = echo "\"\"\"Init file.\"\"\"" > \$out
+
+build \$pyOut/__init__.py: getInitPy
+build \$pyOut/../__init__.py: getInitPy
 EOF
 
 for f in $(find $DIR -type f -name '*.proto'); do
@@ -44,4 +50,12 @@ build ${pyOutFiles[@]}: genPy $(realpath $f --relative-to=$DIR)
   flags = \$pyFlags
   outdir = \$pyOut
 EOF
+
+grep -qe "build \$pyOut/__init__.py: getInitPy" $(dirname $0)/build.ninja
+rootOK=${?}
+grep -qe "build \$pyOut/$childDir/__init__.py: getInitPy" $(dirname $0)/build.ninja
+childOK=${?}
+if [ $rootOK -ne 0 -a $childOK -ne 0 ]; then
+  echo build "\$pyOut/$childDir/__init__.py: getInitPy" >> $(dirname $0)/build.ninja
+fi
 done
