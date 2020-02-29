@@ -10,6 +10,7 @@ require (
 	github.com/onsi/ginkgo v1.12.0
 	github.com/onsi/gomega v1.9.0
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/vmihailenco/msgpack v4.0.4+incompatible // indirect
 	github.com/xdg/stringprep v1.0.0 // indirect
 	go.mongodb.org/mongo-driver v1.3.0
 	golang.org/x/crypto v0.0.0-20200128174031-69ecbb4d6d5d // indirect
