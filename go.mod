@@ -4,7 +4,7 @@ go 1.13
 
 require (
 	github.com/go-playground/validator/v10 v10.2.0
-	github.com/golang/protobuf v1.3.3
+	github.com/golang/protobuf v1.3.4
 	github.com/google/go-cmp v0.4.0 // indirect
 	github.com/kr/pretty v0.2.0 // indirect
 	github.com/onsi/ginkgo v1.12.0
