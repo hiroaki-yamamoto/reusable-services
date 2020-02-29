@@ -5,7 +5,7 @@ import (
 	"io"
 	"strings"
 
-	tmpErrs "github.com/hiroaki-yamamoto/reusable-services/render/go/errors"
+	errs "github.com/hiroaki-yamamoto/reusable-services/errors"
 	"github.com/hiroaki-yamamoto/reusable-services/render/go/rpc"
 	"github.com/vmihailenco/msgpack"
 )
@@ -24,7 +24,9 @@ func (me *Server) Render(
 	tmpName := req.GetTmpName()
 	if tmp, ok = me.htmlTemplate[tmpName]; !ok || tmp == nil {
 		if tmp, ok = me.textTemplate[tmpName]; !ok || tmp == nil {
-			err = &tmpErrs.NoTemplateFound{TmpName: req.GetTmpName()}
+			err = &errs.NotFound{
+				Metadata: map[string]interface{}{"templateName": tmpName},
+			}
 			return
 		}
 	}
