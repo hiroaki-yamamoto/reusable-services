@@ -22,10 +22,8 @@ func (me *Server) Render(
 	var tmp itemplate
 	var ok bool
 	tmpName := req.GetTmpName()
-	tmp, ok = me.htmlTemplate[tmpName]
-	if !ok || tmp == nil {
-		tmp, ok = me.textTemplate[tmpName]
-		if !ok || tmp == nil {
+	if tmp, ok = me.htmlTemplate[tmpName]; !ok || tmp == nil {
+		if tmp, ok = me.textTemplate[tmpName]; !ok || tmp == nil {
 			err = &tmpErrs.NoTemplateFound{TmpName: req.GetTmpName()}
 			return
 		}
