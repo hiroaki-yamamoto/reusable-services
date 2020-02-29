@@ -48,9 +48,15 @@ var _ = Describe("Pop", func() {
 			}
 		})
 		It("Should Raise NotFound", func() {
-			res, err := svr.Pop(rootCtx, &rpc.Token{Token: tokenTxt, Purpose: "test"})
+			req := &rpc.Token{Token: tokenTxt, Purpose: "test"}
+			res, err := svr.Pop(rootCtx, req)
 			Expect(res).To(BeNil())
-			Expect(err).To(MatchError(&errors.NotFound{}))
+			Expect(err).To(MatchError(&errors.NotFound{
+				Metadata: map[string]interface{}{
+					"purpose": req.GetPurpose(),
+					"token":   req.GetToken(),
+				},
+			}))
 			Expect(deleted).To(BeFalse())
 		})
 	})
@@ -117,9 +123,15 @@ var _ = Describe("Pop", func() {
 			}
 		})
 		It("Should raise NotFound, and delete the token.", func() {
-			res, err := svr.Pop(rootCtx, &rpc.Token{Token: tokenTxt, Purpose: "test"})
+			req := &rpc.Token{Token: tokenTxt, Purpose: "test"}
+			res, err := svr.Pop(rootCtx, req)
 			Expect(res).To(BeNil())
-			Expect(err).To(MatchError(&errors.NotFound{}))
+			Expect(err).To(MatchError(&errors.NotFound{
+				Metadata: map[string]interface{}{
+					"purpose": req.GetPurpose(),
+					"token":   req.GetToken(),
+				},
+			}))
 			Expect(deleted).To(BeTrue())
 		})
 	})
