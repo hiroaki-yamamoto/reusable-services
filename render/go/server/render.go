@@ -7,7 +7,7 @@ import (
 	errs "github.com/hiroaki-yamamoto/reusable-services/errors"
 	"github.com/hiroaki-yamamoto/reusable-services/render/go/interfaces"
 	"github.com/hiroaki-yamamoto/reusable-services/render/go/rpc"
-	"github.com/vmihailenco/msgpack"
+	"github.com/vmihailenco/msgpack/v4"
 )
 
 // Render sends the rendered template.
