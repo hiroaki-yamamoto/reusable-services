@@ -2,33 +2,27 @@ package server
 
 import (
 	"context"
-	"io"
 	"strings"
 
 	errs "github.com/hiroaki-yamamoto/reusable-services/errors"
+	"github.com/hiroaki-yamamoto/reusable-services/render/go/interfaces"
 	"github.com/hiroaki-yamamoto/reusable-services/render/go/rpc"
 	"github.com/vmihailenco/msgpack"
 )
-
-type itemplate interface {
-	Execute(wr io.Writer, data interface{}) error
-}
 
 // Render sends the rendered template.
 func (me *Server) Render(
 	ctx context.Context,
 	req *rpc.RenderingRequest,
 ) (resp *rpc.RenderingResponse, err error) {
-	var tmp itemplate
+	var tmp interfaces.ITemplate
 	var ok bool
 	tmpName := req.GetTmpName()
-	if tmp, ok = me.htmlTemplate[tmpName]; !ok || tmp == nil {
-		if tmp, ok = me.textTemplate[tmpName]; !ok || tmp == nil {
-			err = &errs.NotFound{
-				Metadata: map[string]interface{}{"templateName": tmpName},
-			}
-			return
+	if tmp, ok = me.templates[tmpName]; !ok || tmp == nil {
+		err = &errs.NotFound{
+			Metadata: map[string]interface{}{"templateName": tmpName},
 		}
+		return
 	}
 	argumentMap := make(map[string]interface{})
 	if err = msgpack.Unmarshal(req.GetArgumentMap(), argumentMap); err != nil {
