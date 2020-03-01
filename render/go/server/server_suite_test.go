@@ -18,12 +18,12 @@ func TestServer(t *testing.T) {
 }
 
 var _ = BeforeEach(func() {
-	svr = &server.Server{}
+	svr = server.New()
 	txtTmp := txt.New("txtTmp")
 	txtTmp, err := txtTmp.Parse("{{ .test }}")
 	Expect(err).To(Succeed())
 	htmlTmp := html.New("htmlTmp")
-	htmlTmp, err = htmlTmp.Parse("<p>{{ .html }}</p>")
+	htmlTmp, err = htmlTmp.Parse("<p>{{ .test }}</p>")
 	Expect(err).To(Succeed())
 
 	svr.SetTemplate(txtTmp.Name(), txtTmp)

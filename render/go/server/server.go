@@ -9,8 +9,8 @@ type Server struct {
 	templates map[string]interfaces.ITemplate
 }
 
-// NewServer constructs a new instance of Server.
-func NewServer() *Server {
+// New constructs a new instance of Server.
+func New() *Server {
 	return &Server{
 		templates: make(map[string]interfaces.ITemplate),
 	}

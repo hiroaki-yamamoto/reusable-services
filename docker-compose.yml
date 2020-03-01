@@ -9,13 +9,6 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: adapter
     tmpfs:
       - /data/db
-  token:
-    build:
-      context: .
-      args:
-        PKGNAME: token
-    volumes:
-      - ".:/opt/code"
   adapter-db-mongo:
     build:
       context: .
@@ -25,6 +18,20 @@ services:
       - ".:/opt/code"
     depends_on:
       - mongo
+  render:
+    build:
+      context: .
+      args:
+        PKGNAME: render/go
+    volumes:
+      - ".:/opt/code"
+  token:
+    build:
+      context: .
+      args:
+        PKGNAME: token
+    volumes:
+      - ".:/opt/code"
   random:
     build:
       context: .

@@ -25,7 +25,7 @@ func (me *Server) Render(
 		return
 	}
 	argumentMap := make(map[string]interface{})
-	if err = msgpack.Unmarshal(req.GetArgumentMap(), argumentMap); err != nil {
+	if err = msgpack.Unmarshal(req.GetArgumentMap(), &argumentMap); err != nil {
 		return
 	}
 	var buf strings.Builder
