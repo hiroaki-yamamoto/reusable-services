@@ -40,7 +40,6 @@ commands:
           root: .
           paths:
             - coverages/<<parameters.COVNAME>>.json
-            - ./cc-test-reporter
 jobs:
   build:
     docker:
