@@ -80,7 +80,7 @@ jobs:
           PKGNAME: adapter/db/mongodb
           COVNAME: mongo-adapter
   test-go:
-    parameter:
+    parameters:
       PKGNAME:
         type: string
       COVNAME:
