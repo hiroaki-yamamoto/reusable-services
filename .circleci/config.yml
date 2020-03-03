@@ -18,11 +18,6 @@ commands:
       - run:
           name: "Run go mod download"
           command: "go mod download"
-      - run:
-          name: "Download Code Climate App"
-          command: |
-            curl -o ../cc-test-reporter -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 &&
-            chmod +x ../cc-test-reporter
       - save_cache:
           key: ci-{{ .Branch }}-{{ checksum "go.sum" }}
           paths:
@@ -30,19 +25,22 @@ commands:
       - run:
           name: "Creating coverage storage"
           command: mkdir -p /tmp/coverages
+      - run: ./cc-test-reporter before-build
       - run:
-          name: "Test & Upload the coverage"
+          name: "Test with measuring coverage"
+          command: go test -coverprofile=c.out ./<<parameters.PKGNAME>>/...
+      - run:
+          name: "Collect Coverage"
           command: |
-            ../cc-test-reporter before-build &&
-            go test -coverprofile=c.out ./<<parameters.PKGNAME>>/...
-            ../cc-test-reporter format-coverage \
+            ./cc-test-reporter format-coverage \
               -t gocov \
               --prefix github.com/hiroaki-yamamoto/${CIRCLE_PROJECT_REPONAME} \
-              -o /tmp/coverages/<<parameters.COVNAME>>.json
+              -o ./coverages/<<parameters.COVNAME>>.json
       - persist_to_workspace:
-          root: /tmp
+          root: .
           paths:
             - coverages/<<parameters.COVNAME>>.json
+            - ./cc-test-reporter
 jobs:
   build:
     docker:
@@ -54,6 +52,11 @@ jobs:
           command: |
             apk --no-cache --update upgrade &&
             apk --no-cache add git gcc libc-dev ca-certificates
+      - run:
+          name: "Download Code Climate App"
+          command: |
+            curl -o ./cc-test-reporter -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 &&
+            chmod +x ./cc-test-reporter
       - checkout
       - persist_to_workspace:
           root: ./
@@ -76,34 +79,29 @@ jobs:
       - go-test:
           PKGNAME: adapter/db/mongodb
           COVNAME: mongo-adapter
-  token:
-      docker:
-        - image: golang:alpine
-          environment:
-            GO111MODULE: 'on'
-      working_directory: ~/repo
-      steps:
-        - attach_workspace:
-            at: ./
-        - go-test:
-            PKGNAME: token
-            COVNAME: token
-  random:
-      docker:
-        - image: golang:alpine
-          environment:
-            GO111MODULE: 'on'
-      working_directory: ~/repo
-      steps:
-        - attach_workspace:
-            at: ./
-        - go-test:
-            PKGNAME: random
-            COVNAME: random
+  test-go:
+    parameter:
+      PKGNAME:
+        type: string
+      COVNAME:
+        type: string
+    docker:
+      - image: golang:alpine
+        environment:
+          GO111MODULE: 'on'
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ./
+      - go-test:
+          PKGNAME: <<parameters.PKGNAME>>
+          COVNAME: <<parameters.COVNAME>>
   collect_coverage:
     docker:
       - image: alpine
     working_directory: ~/repo
+    environment:
+      NUM_COV: '4'
     steps:
       - run:
           name: "Fetch Global Dependencies"
@@ -111,24 +109,19 @@ jobs:
             apk --no-cache --update upgrade &&
             apk --no-cache add git gcc libc-dev ca-certificates curl
       - run:
-          name: "Download Code Climate App"
-          command: |
-            curl -o ../cc-test-reporter -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 &&
-            chmod +x ../cc-test-reporter
-      - run:
           name: "Make Coverage Storage"
           command: mkdir -p /tmp/coverages
       - attach_workspace:
-          at: /tmp
+          at: '.'
       - run:
           name: "Combine Coverages"
           command: |
-            ../cc-test-reporter sum-coverage /tmp/coverages/*.json\
-              -o ./coverage-overall.json -p 3
+            ./cc-test-reporter sum-coverage ./coverages/*.json\
+              -o ./coverage-overall.json -p ${NUM_COV}
       - run:
           name: "Upload the coverage"
           command:
-            ../cc-test-reporter upload-coverage -i ./coverage-overall.json
+            ./cc-test-reporter upload-coverage -i ./coverage-overall.json
 
 workflows:
   version: 2
@@ -138,10 +131,22 @@ workflows:
       - mongo-adapter:
           requires:
             - build
-      - token:
+      - test-go:
+          name: token
+          PKGNAME: token
+          COVNAME: token
           requires:
             -  build
-      - random:
+      - test-go:
+          name: random
+          PKGNAME: random
+          COVNAME: random
+          requires:
+            -  build
+      - test-go:
+          name: render-go
+          PKGNAME: render/go
+          COVNAME: render-go
           requires:
             -  build
       - collect_coverage:
@@ -149,3 +154,4 @@ workflows:
             - mongo-adapter
             - token
             - random
+            - render-go
