@@ -52,12 +52,12 @@ jobs:
           command: |
             apk --no-cache --update upgrade &&
             apk --no-cache add git gcc libc-dev ca-certificates curl
+      - checkout
       - run:
           name: "Download Code Climate App"
           command: |
             curl -o ./cc-test-reporter -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 &&
             chmod +x ./cc-test-reporter
-      - checkout
       - persist_to_workspace:
           root: ./
           paths:
