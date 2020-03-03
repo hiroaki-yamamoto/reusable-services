@@ -11,7 +11,7 @@ commands:
           name: "Fetch Global Dependencies"
           command: |
             apk --no-cache --update upgrade &&
-            apk --no-cache add git gcc libc-dev ca-certificates curl
+            apk --no-cache add git gcc libc-dev ca-certificates
       - restore_cache:
             keys:
               - ci-{{ .Branch }}-{{ checksum "go.sum" }}
@@ -51,7 +51,7 @@ jobs:
           name: "Fetch Global Dependencies"
           command: |
             apk --no-cache --update upgrade &&
-            apk --no-cache add git gcc libc-dev ca-certificates
+            apk --no-cache add git gcc libc-dev ca-certificates curl
       - run:
           name: "Download Code Climate App"
           command: |
