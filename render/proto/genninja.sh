@@ -23,7 +23,9 @@ rule mv
 rule getInitPy
   command = echo "\"\"\"Init file.\"\"\"" > \$out
 
-build \$pyOut/__init__.py: getInitPy
+rule genRPCInitPy
+  command = echo "\"\"\"Init file.\"\"\"import sys\nfrom pathlib import Path\n\nsys.path.append(str(Path(__file__).parent))" > \$out
+
 build \$pyOut/../__init__.py: getInitPy
 EOF
 
@@ -51,7 +53,7 @@ build ${pyOutFiles[@]}: genPy $(realpath $f --relative-to=$DIR)
   outdir = \$pyOut
 EOF
 
-grep -qe "build \$pyOut/__init__.py: getInitPy" $(dirname $0)/build.ninja
+grep -qe "build \$pyOut/__init__.py: genRPCInitPy" $(dirname $0)/build.ninja
 rootOK=${?}
 grep -qe "build \$pyOut/$childDir/__init__.py: getInitPy" $(dirname $0)/build.ninja
 childOK=${?}
