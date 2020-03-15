@@ -50,10 +50,14 @@ commands:
       - restore_cache:
             keys:
               - ci-{{ .Branch }}-{{ checksum "poetry.lock" }}
-      - run: poetry install
+      - run: ~/.poetry/bin/poetry install
+      - save_cache:
+          key: ci-{{ .Branch }}-{{ checksum "poetry.lock" }}
+          paths:
+            - "~/.cache/pypoetry"
       - run: ./cc-test-reporter before-build
       - run: coverage erase
-      - run: poetry run tox
+      - run: ~/.poetry/bin/poetry run tox
       - run: coverage xml
       - run:
           name: "Collect Coverage"
