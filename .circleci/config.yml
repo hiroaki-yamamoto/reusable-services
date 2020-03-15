@@ -34,7 +34,7 @@ commands:
               --prefix github.com/hiroaki-yamamoto/${CIRCLE_PROJECT_REPONAME} \
               -o ./coverages/<<parameters.COVNAME>>.json
       - persist_to_workspace:
-          root: .
+          root: ../../
           paths:
             - coverages/<<parameters.COVNAME>>.json
   python-test:
