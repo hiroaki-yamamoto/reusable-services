@@ -58,13 +58,13 @@ commands:
       - run: ../../cc-test-reporter before-build
       - run: PATH=$PATH:~/.poetry/bin poetry run coverage erase
       - run: PATH=$PATH:~/.poetry/bin poetry run tox
-      - run: PATH=$PATH:~/.poetry/bin poetry run coverage xml
+      - run: PATH=$PATH:~/.poetry/bin poetry run coverage xml -o ../../coverage.xml
       - run:
           name: "Collect Coverage"
           command: |
-            ../../cc-test-reporter format-coverage \
-              -t coverage.py \
-              -o ../../coverages/<<parameters.COVNAME>>.json
+            ./cc-test-reporter format-coverage \
+              -t coverage.py -o coverages/<<parameters.COVNAME>>.json
+          working_directory: ../../
       - persist_to_workspace:
           root: ../../
           paths:
