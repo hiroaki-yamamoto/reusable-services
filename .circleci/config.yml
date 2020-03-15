@@ -120,7 +120,7 @@ jobs:
       - go-test:
           PKGNAME: <<parameters.PKGNAME>>
           COVNAME: <<parameters.COVNAME>>
-  test-python:
+  test-py:
     parameters:
       PKGNAME:
         type: string
