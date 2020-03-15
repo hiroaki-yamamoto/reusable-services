@@ -22,9 +22,6 @@ commands:
           key: ci-{{ .Branch }}-{{ checksum "go.sum" }}
           paths:
             - "/go"
-      - run:
-          name: "Creating coverage storage"
-          command: mkdir -p /tmp/coverages
       - run: ./cc-test-reporter before-build
       - run:
           name: "Test with measuring coverage"
@@ -35,6 +32,34 @@ commands:
             ./cc-test-reporter format-coverage \
               -t gocov \
               --prefix github.com/hiroaki-yamamoto/${CIRCLE_PROJECT_REPONAME} \
+              -o ./coverages/<<parameters.COVNAME>>.json
+      - persist_to_workspace:
+          root: .
+          paths:
+            - coverages/<<parameters.COVNAME>>.json
+  python-test:
+    parameters:
+      PKGNAME:
+        type: string
+      COVNAME:
+        type: string
+    steps:
+      - run:
+          name: "Install poetry"
+          command: curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+      - restore_cache:
+            keys:
+              - ci-{{ .Branch }}-{{ checksum "poetry.lock" }}
+      - run: poetry install
+      - run: ./cc-test-reporter before-build
+      - run: coverage erase
+      - run: poetry run tox
+      - run: coverage xml
+      - run:
+          name: "Collect Coverage"
+          command: |
+            ./cc-test-reporter format-coverage \
+              -t coverage.py \
               -o ./coverages/<<parameters.COVNAME>>.json
       - persist_to_workspace:
           root: .
@@ -95,12 +120,27 @@ jobs:
       - go-test:
           PKGNAME: <<parameters.PKGNAME>>
           COVNAME: <<parameters.COVNAME>>
+  test-python:
+    parameters:
+      PKGNAME:
+        type: string
+      COVNAME:
+        type: string
+    docker:
+      - image: python
+    working_directory: ~/repo/<<parameters.PKGNAME>>
+    steps:
+      - attach_workspace:
+          at: ./
+      - python-test:
+          PKGNAME: <<parameters.PKGNAME>>
+          COVNAME: <<parameters.COVNAME>>
   collect_coverage:
     docker:
       - image: alpine
     working_directory: ~/repo
     environment:
-      NUM_COV: '4'
+      NUM_COV: '5'
     steps:
       - run:
           name: "Fetch Global Dependencies"
@@ -148,9 +188,16 @@ workflows:
           COVNAME: render-go
           requires:
             -  build
+      - test-py:
+          name: render-py
+          PKGNAME: render/py
+          COVNAME: render-py
+          requires:
+            - build
       - collect_coverage:
           requires:
             - mongo-adapter
             - token
             - random
             - render-go
+            - test-py

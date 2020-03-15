@@ -25,6 +25,11 @@ services:
         PKGNAME: render/go
     volumes:
       - ".:/opt/code"
+  render-python:
+    build:
+      context: ./render/py
+    volumes:
+      - "./render/py:/opt/code"
   token:
     build:
       context: .
