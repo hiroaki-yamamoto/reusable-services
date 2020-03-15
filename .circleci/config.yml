@@ -56,9 +56,9 @@ commands:
           paths:
             - "~/.cache/pypoetry"
       - run: ../../cc-test-reporter before-build
-      - run: coverage erase
+      - run: ~/.poetry/bin/poetry run coverage erase
       - run: ~/.poetry/bin/poetry run tox
-      - run: coverage xml
+      - run: ~/.poetry/bin/poetry run coverage xml
       - run:
           name: "Collect Coverage"
           command: |
