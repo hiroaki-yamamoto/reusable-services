@@ -126,6 +126,8 @@ github.com/vmihailenco/msgpack/v4 v4.3.8 h1:+xItGS88KRuaFXAnUJ641+sILYBvTiU/Fdr9
 github.com/vmihailenco/msgpack/v4 v4.3.8/go.mod h1:FRfapYj7pFGEUbwyjWLnphQEv9PMVLI7n2ufB0YLaRE=
 github.com/vmihailenco/msgpack/v4 v4.3.9 h1:2kIG4FzA4tycx8oC6BL/OaoyvZ5STw6iUR2ZmFwJj+Q=
 github.com/vmihailenco/msgpack/v4 v4.3.9/go.mod h1:gborTTJjAo/GWTqqRjrLCn9pgNN+NXzzngzBKDPIqw4=
+github.com/vmihailenco/msgpack/v4 v4.3.10 h1:e62mb0YS34ux+bMDGTG6yx2UqlRShMemrJ4HOmAOndU=
+github.com/vmihailenco/msgpack/v4 v4.3.10/go.mod h1:gborTTJjAo/GWTqqRjrLCn9pgNN+NXzzngzBKDPIqw4=
 github.com/vmihailenco/tagparser v0.1.1 h1:quXMXlA39OCbd2wAdTsGDlK9RkOk6Wuw+x37wVyIuWY=
 github.com/vmihailenco/tagparser v0.1.1/go.mod h1:OeAg3pn3UbLjkWt+rN9oFYB6u/cQgqMEUPoW2WPyhdI=
 github.com/xdg/scram v0.0.0-20180814205039-7eeb5667e42c h1:u40Z8hqBAAQyv+vATcGgV0YCnDjqSL7/q/JyPhhJSPk=
