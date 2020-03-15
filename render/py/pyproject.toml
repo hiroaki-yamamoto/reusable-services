@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "reusable-services"
+name = "reusable_services_render"
 version = "0.1.0"
 description = "A Reusable Services writting in Various Languages."
 authors = ["Hiroaki Yamamoto <hiroaki@hysoftware.net>"]
@@ -13,7 +13,7 @@ classifiers = [
   "Programming Language :: Go",
 ]
 packages = [
-  { include = "render/**/*.py" },
+  { include = "reusable_services" },
 ]
 
 [tool.poetry.dependencies]

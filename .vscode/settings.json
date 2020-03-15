@@ -3,5 +3,5 @@
   "python.linting.pylintEnabled": false,
   "python.linting.mypyEnabled": false,
   "python.linting.enabled": true,
-  "python.pythonPath": "/home/hyamamoto/Documents/Workspace/reusable-services/venv/bin/python3"
+  "python.pythonPath": "/usr/sbin/python"
 }

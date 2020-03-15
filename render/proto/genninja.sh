@@ -7,7 +7,7 @@ packagePath="github.com/hiroaki-yamamoto/render"
 cat > $(dirname $0)/build.ninja << EOF
 goFlags = --go_out=plugins=grpc
 goOut = $(realpath $(dirname $DIR)/go/rpc --relative-to=$DIR)
-pyOut = $(realpath $(dirname $DIR)/py/rpc --relative-to=$DIR)
+pyOut = $(realpath $(dirname $DIR)/py/reusable_services/render/rpc --relative-to=$DIR)
 
 inc = .
 
@@ -21,11 +21,12 @@ rule mv
   command = mv \$in \$out
 
 rule getInitPy
-  command = echo "\"\"\"Init file.\"\"\"" > \$out
+  command = cp init.py \$out
 
 rule genRPCInitPy
-  command = echo "\"\"\"Init file.\"\"\"import sys\nfrom pathlib import Path\n\nsys.path.append(str(Path(__file__).parent))" > \$out
+  command = cp initRPC.py \$out
 
+build \$pyOut/__init__.py: genRPCInitPy
 build \$pyOut/../__init__.py: getInitPy
 EOF
 

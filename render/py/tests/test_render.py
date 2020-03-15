@@ -9,8 +9,8 @@ from unittest import TestCase
 from jinja2 import Environment, DictLoader
 import msgpack
 
-from ..rpc.models_pb2 import RenderingRequest
-from ..server import Server
+from reusable_services.render.rpc.models_pb2 import RenderingRequest
+from reusable_services.render.server import Server
 
 
 class RenderTest(TestCase):
