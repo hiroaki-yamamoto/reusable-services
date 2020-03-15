@@ -103,7 +103,7 @@ jobs:
     working_directory: ~/repo
     steps:
       - attach_workspace:
-          at: ../
+          at: ./
       - go-test:
           PKGNAME: adapter/db/mongodb
           COVNAME: mongo-adapter
@@ -135,7 +135,7 @@ jobs:
     working_directory: ~/repo/<<parameters.PKGNAME>>
     steps:
       - attach_workspace:
-          at: ./
+          at: ../
       - python-test:
           PKGNAME: <<parameters.PKGNAME>>
           COVNAME: <<parameters.COVNAME>>
