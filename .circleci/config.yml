@@ -135,7 +135,7 @@ jobs:
     working_directory: ~/repo/<<parameters.PKGNAME>>
     steps:
       - attach_workspace:
-          at: ../
+          at: ../../
       - python-test:
           PKGNAME: <<parameters.PKGNAME>>
           COVNAME: <<parameters.COVNAME>>
