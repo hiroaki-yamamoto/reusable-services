@@ -28,6 +28,7 @@ rule genRPCInitPy
 
 build \$pyOut/__init__.py: genRPCInitPy
 build \$pyOut/../__init__.py: getInitPy
+build \$pyOut/../../__init__.py: getInitPy
 EOF
 
 for f in $(find $DIR -type f -name '*.proto'); do
