@@ -4,6 +4,10 @@
 			"path": ".",
 			"name": "root"
 		},
+		{
+			"path": "render/node",
+			"name": "Pug Rendering Service",
+		}
 	],
 	"settings": {
 		"protoc": {
