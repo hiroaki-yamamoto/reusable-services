@@ -10,4 +10,5 @@ globals:
   SharedArrayBuffer: readonly
 parserOptions:
   ecmaVersion: 2018
-rules: {}
+rules:
+  class-methods-use-this: 0
