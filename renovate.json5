@@ -1,4 +1,4 @@
-renovate: {
+{
   extends: ["config:base", "schedule:weekends"],
   rangeStrategy: "replace",
   lockFileMaintenance: {enabled: true},
