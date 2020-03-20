@@ -1,8 +1,8 @@
 {
-  "name": "reusable-services",
+  "name": "@reusable-services/render",
   "version": "0.0.0",
-  "description": "Resusable Services",
-  "main": "null",
+  "description": "Pug Rendering Service provided by reusable services",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,28 +25,5 @@
     "google-protobuf": "^3.11.4",
     "grpc": "^1.24.2",
     "pug": "^2.0.4"
-  },
-  "devDependencies": {},
-  "renovate": {
-    "extends": [
-      "config:base",
-      "schedule:weekends"
-    ],
-    "rangeStrategy": "replace",
-    "lockFileMaintenance": {
-      "enabled": true
-    },
-    "assignees": [
-      "hiroaki-yamamoto"
-    ],
-    "reviewers": [
-      "hiroaki-yamamoto"
-    ],
-    "groupName": "Updates",
-    "automerge": true,
-    "major": {
-      "automerge": false,
-      "groupName": "Major Updates"
-    }
   }
 }

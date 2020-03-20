@@ -1,0 +1,13 @@
+renovate: {
+  extends: ["config:base", "schedule:weekends"],
+  rangeStrategy: "replace",
+  lockFileMaintenance: {enabled: true},
+  assignees: ["hiroaki-yamamoto"],
+  reviewers: ["hiroaki-yamamoto"],
+  groupName: "Updates",
+  automerge: true,
+  major: {
+    automerge: false,
+    groupName: "Major Updates"
+  }
+}
