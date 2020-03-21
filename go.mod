@@ -4,14 +4,14 @@ go 1.13
 
 require (
 	github.com/go-playground/validator/v10 v10.2.0
-	github.com/golang/mock v1.4.2
+	github.com/golang/mock v1.4.3
 	github.com/golang/protobuf v1.3.5
 	github.com/google/go-cmp v0.4.0 // indirect
 	github.com/kr/pretty v0.2.0 // indirect
 	github.com/onsi/ginkgo v1.12.0
 	github.com/onsi/gomega v1.9.0
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/vmihailenco/msgpack/v4 v4.3.10
+	github.com/vmihailenco/msgpack/v4 v4.3.11
 	github.com/xdg/stringprep v1.0.0 // indirect
 	go.mongodb.org/mongo-driver v1.3.1
 	golang.org/x/crypto v0.0.0-20200128174031-69ecbb4d6d5d // indirect
