@@ -8,7 +8,7 @@ class RenderingService {
     const protoPath = path.join(__dirname, '../proto/services.proto');
     loader.load(protoPath).then((def) => {
       this.desc = grpc.loadPackageDefinition(def);
-      this.render = this.desc.TemplateService;
+      this.service = this.desc.TemplateService;
     });
     this.templates = {};
   }
@@ -22,6 +22,14 @@ class RenderingService {
     };
 
     cb(null, resp);
+  }
+
+  getService() {
+    const svr = grpc.Server();
+    svr.addProtoService(this.service.TemplateService.service, {
+      render: this.render,
+    });
+    return svr;
   }
 }
 
