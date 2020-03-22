@@ -12,3 +12,7 @@ parserOptions:
   ecmaVersion: 2018
 rules:
   class-methods-use-this: 0
+ignorePatterns:
+  - node_modules/
+  - .nyc_output
+  - tests/mocha.js
