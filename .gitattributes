@@ -1,4 +1,4 @@
-render/node/mocha.js linguist-generated
-render/node/mocha.css linguist-generated
-render/node/index.html linguist-generated
+node/tests/mocha.js linguist-generated
+node/tests/mocha.css linguist-generated
+node/tests/index.html linguist-generated
 rpc linguist-generated
