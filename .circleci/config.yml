@@ -89,7 +89,7 @@ commands:
       - run:
           name: "Collect Coverage"
           command: |
-            ./cc-test-reporter format-coverage ./coverage/lcov.info \
+            ./cc-test-reporter format-coverage ./<<parameters.PKGNAME>>/coverage/lcov.info \
               -t lcov -o coverages/<<parameters.COVNAME>>.json
           working_directory: ../../
       - persist_to_workspace:
