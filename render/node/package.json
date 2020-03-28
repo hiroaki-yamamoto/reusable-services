@@ -4,7 +4,8 @@
   "description": "Pug Rendering Service provided by reusable services",
   "main": "index.js",
   "scripts": {
-    "test": "nyc --reporter=lcov --reporter=text mocha tests"
+    "test": "nyc -r lcov -r text mocha test.js",
+    "test-ci": "nyc -r lcovonly -r text -x **/test.js --cwd ../../ mocha ./test.js"
   },
   "repository": {
     "type": "git",

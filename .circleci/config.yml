@@ -85,11 +85,11 @@ commands:
           paths:
             - "./node_modules"
       - run: ../../cc-test-reporter before-build
-      - run: yarn run test
+      - run: yarn run test-ci
       - run:
           name: "Collect Coverage"
           command: |
-            ./cc-test-reporter format-coverage ./<<parameters.PKGNAME>>/coverage/lcov.info \
+            ./cc-test-reporter format-coverage ./coverage/lcov.info \
               -t lcov -o coverages/<<parameters.COVNAME>>.json
           working_directory: ../../
       - persist_to_workspace:

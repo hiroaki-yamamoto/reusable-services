@@ -4,7 +4,7 @@ const { expect } = require('chai');
 const grpc = require('grpc');
 const pug = require('pug');
 const msgpack = require('msgpack');
-const Service = require('../index');
+const Service = require('./index');
 
 
 describe('Pug Template Rendering Service', () => {
