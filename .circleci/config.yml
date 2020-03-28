@@ -69,6 +69,33 @@ commands:
           root: ../../
           paths:
             - coverages/<<parameters.COVNAME>>.json
+  node-test:
+    parameters:
+      PKGNAME:
+        type: string
+      COVNAME:
+        type: string
+    steps:
+      - restore_cache:
+            keys:
+              - ci-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - run: yarn install
+      - save_cache:
+          key: ci-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - "~/.cache/pypoetry"
+      - run: ../../cc-test-reporter before-build
+      - run: yarn run test
+      - run:
+          name: "Collect Coverage"
+          command: |
+            ./cc-test-reporter format-coverage \
+              -t lcov -o coverages/<<parameters.COVNAME>>.json
+          working_directory: ../../
+      - persist_to_workspace:
+          root: ../../
+          paths:
+            - coverages/<<parameters.COVNAME>>.json
 jobs:
   build:
     docker:
@@ -139,12 +166,27 @@ jobs:
       - python-test:
           PKGNAME: <<parameters.PKGNAME>>
           COVNAME: <<parameters.COVNAME>>
+  test-node:
+    parameters:
+      PKGNAME:
+        type: string
+      COVNAME:
+        type: string
+    docker:
+      - image: node
+    working_directory: ~/repo/<<parameters.PKGNAME>>
+    steps:
+      - attach_workspace:
+          at: ../../
+      - python-test:
+          PKGNAME: <<parameters.PKGNAME>>
+          COVNAME: <<parameters.COVNAME>>
   collect_coverage:
     docker:
       - image: alpine
     working_directory: ~/repo
     environment:
-      NUM_COV: '5'
+      NUM_COV: '6'
     steps:
       - run:
           name: "Fetch Global Dependencies"
@@ -198,6 +240,12 @@ workflows:
           COVNAME: render-py
           requires:
             - build
+      - test-node:
+          name: render-node
+          PKGNAME: render/node
+          COVNAME: render-node
+          requires:
+            - build
       - collect_coverage:
           requires:
             - mongo-adapter
@@ -205,3 +253,4 @@ workflows:
             - random
             - render-go
             - render-py
+            - test-node
