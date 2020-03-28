@@ -83,7 +83,7 @@ commands:
       - save_cache:
           key: ci-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
-            - "~/.cache/pypoetry"
+            - "./node_modules"
       - run: ../../cc-test-reporter before-build
       - run: yarn run test
       - run:
@@ -178,7 +178,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ../../
-      - python-test:
+      - node-test:
           PKGNAME: <<parameters.PKGNAME>>
           COVNAME: <<parameters.COVNAME>>
   collect_coverage:
