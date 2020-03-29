@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -21,7 +22,10 @@ var _ = Describe("Push", func() {
 			Purpose: "test",
 			Meta:    []byte("Hello world"),
 		}
-		adapter.FindOneFunc = func(
+		adapter.EXPECT().FindOne(
+			gomock.Any(), gomock.Any(),
+			gomock.Any(), gomock.Any(),
+		).DoAndReturn(func(
 			ctx context.Context,
 			query interface{},
 			doc interface{},
@@ -29,13 +33,15 @@ var _ = Describe("Push", func() {
 		) (err error) {
 			doc = nil
 			return
-		}
-		adapter.InsertFunc = func(
+		}).Times(1)
+		adapter.EXPECT().Insert(
+			gomock.Any(), gomock.Any(),
+		).DoAndReturn(func(
 			ctx context.Context, doc interface{},
 		) (insertedID interface{}, err error) {
 			casted := doc.(*Model)
 			return casted.ID, nil
-		}
+		}).Times(1)
 	})
 	Context("Without duplicated token", func() {
 		It("Should push the token", func() {
@@ -66,7 +72,10 @@ var _ = Describe("Push", func() {
 				Token:   tok,
 				Expires: now.Add(tokMaxAge),
 			}
-			adapter.FindOneFunc = func(
+			adapter.EXPECT().FindOne(
+				gomock.Any(), gomock.Any(),
+				gomock.Any(), gomock.Any(),
+			).DoAndReturn(func(
 				ctx context.Context,
 				query interface{},
 				doc interface{},
@@ -74,7 +83,7 @@ var _ = Describe("Push", func() {
 			) (err error) {
 				doc = model
 				return
-			}
+			}).Times(1)
 		})
 		It("Should update the token", func() {
 			ctx, stop := context.WithTimeout(rootCtx, 1*time.Second)

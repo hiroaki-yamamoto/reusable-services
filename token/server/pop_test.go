@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"go.mongodb.org/mongo-driver/bson"
@@ -19,25 +20,31 @@ var _ = Describe("Pop", func() {
 	var deleted bool
 	var tokenTxt string
 	BeforeEach(func() {
-		adapter.DeleteFunc = func(
-			ctx context.Context, query interface{},
-		) (delCount int64, err error) {
+		adapter.EXPECT().Delete(
+			gomock.Any(), gomock.Any(),
+		).DoAndReturn(func(
+			ctx context.Context,
+			filter interface{},
+		) (int64, error) {
 			deleted = true
-			delCount = 1
-			return
-		}
-		adapter.DeleteManyFunc = func(
-			ctx context.Context, filter interface{},
-		) (delCount int64, err error) {
+			return 1, nil
+		}).Times(1)
+		adapter.EXPECT().DeleteMany(
+			gomock.Any(),
+			gomock.Any(),
+		).DoAndReturn(func(ctx context.Context, filter interface{}) (int64, error) {
 			Expect(filter).To(BeEquivalentTo(bson.M{
 				"expires": bson.M{"$lt": now},
 			}))
 			return 0, nil
-		}
+		}).Times(1)
 	})
 	Context("For not found token.", func() {
 		BeforeEach(func() {
-			adapter.FindOneFunc = func(
+			adapter.EXPECT().FindOne(
+				gomock.Any(), gomock.Any(),
+				gomock.Any(), gomock.Any(),
+			).DoAndReturn(func(
 				ctx context.Context,
 				q interface{},
 				doc interface{},
@@ -45,7 +52,7 @@ var _ = Describe("Pop", func() {
 			) (err error) {
 				doc = nil
 				return
-			}
+			}).Times(1)
 		})
 		It("Should Raise NotFound", func() {
 			req := &rpc.Token{Token: tokenTxt, Purpose: "test"}
@@ -65,7 +72,10 @@ var _ = Describe("Pop", func() {
 			var err error
 			tokenTxt, err = random.GenTxt(tokenSize)
 			Expect(err).To(Succeed())
-			adapter.FindOneFunc = func(
+			adapter.EXPECT().FindOne(
+				gomock.Any(), gomock.Any(),
+				gomock.Any(), gomock.Any(),
+			).DoAndReturn(func(
 				ctx context.Context,
 				q interface{},
 				doc interface{},
@@ -86,7 +96,7 @@ var _ = Describe("Pop", func() {
 				}
 				out.Expires = time.Now().UTC().Add(2 * time.Hour)
 				return
-			}
+			}).Times(1)
 		})
 		It("Should pop the token", func() {
 			res, err := svr.Pop(rootCtx, &rpc.Token{Token: tokenTxt, Purpose: "test"})
@@ -99,7 +109,10 @@ var _ = Describe("Pop", func() {
 	})
 	Context("For rotted token", func() {
 		BeforeEach(func() {
-			adapter.FindOneFunc = func(
+			adapter.EXPECT().FindOne(
+				gomock.Any(), gomock.Any(),
+				gomock.Any(), gomock.Any(),
+			).DoAndReturn(func(
 				ctx context.Context,
 				q interface{},
 				doc interface{},
@@ -120,7 +133,7 @@ var _ = Describe("Pop", func() {
 				}
 				out.Expires = time.Now().UTC().Add(-2 * time.Hour)
 				return
-			}
+			}).Times(1)
 		})
 		It("Should raise NotFound, and delete the token.", func() {
 			req := &rpc.Token{Token: tokenTxt, Purpose: "test"}
