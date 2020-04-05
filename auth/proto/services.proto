@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 import "google/protobuf/empty.proto";
-import "./models.proto";
+import "models.proto";
 
 option go_package = "rpc";
 
@@ -17,7 +17,7 @@ message CredentialChangeRequest1 {
 }
 
 message CredentialChangeRequest2 {
-  auth.models.AccessToken token = 1;
+  auth.models.AccessToken loginToken = 1;
   string token = 2;
   string current = 3;
   string new = 4;
@@ -48,7 +48,7 @@ service Auth {
   rpc activate(ActivationRequest) returns (google.protobuf.Empty);
   rpc getAuthInfo(auth.models.AccessToken) returns (auth.models.AuthInfo);
   rpc checkUserExists(UserExistence) returns (UserExistence);
-  rpc auth(auth.models.AuthRequest) returns (auth.models.AccessToken);
+  rpc auth(AuthRequest) returns (auth.models.AccessToken);
   rpc requestEmailChange(CredentialChangeRequest1) returns (google.protobuf.Empty);
   rpc chamgeEmail(CredentialChangeRequest2) returns (google.protobuf.Empty);
   rpc requestPWChange(CredentialChangeRequest1) returns (google.protobuf.Empty);
