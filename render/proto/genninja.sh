@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 DIR=$(dirname $(realpath $0))
-packagePath="github.com/hiroaki-yamamoto/render"
+packagePath="render"
 
 cat > $(dirname $0)/build.ninja << EOF
 goFlags = --go_out=plugins=grpc
@@ -40,7 +40,7 @@ build tmp/${packagePath}/go/rpc/$childDir/${fname}.pb.go: protoc $(
   realpath $f --relative-to=$DIR
 )
   flags = \$goFlags
-  outdir = tmp
+  outdir = tmp/${packagePath}/go/rpc
 
 build \$goOut/$childDir/${fname}.pb.go: mv tmp/${packagePath}/go/rpc/$childDir/${fname}.pb.go
 EOF

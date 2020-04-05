@@ -17,8 +17,8 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='models.proto',
   package='render',
   syntax='proto3',
-  serialized_options=b'Z)github.com/hiroaki-yamamoto/render/go/rpc',
-  serialized_pb=b'\n\x0cmodels.proto\x12\x06render\"8\n\x10RenderingRequest\x12\x0f\n\x07tmpName\x18\x01 \x01(\t\x12\x13\n\x0b\x61rgumentMap\x18\x02 \x01(\x0c\"!\n\x11RenderingResponse\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\tB+Z)github.com/hiroaki-yamamoto/render/go/rpcb\x06proto3'
+  serialized_options=b'Z\003rpc',
+  serialized_pb=b'\n\x0cmodels.proto\x12\x06render\"8\n\x10RenderingRequest\x12\x0f\n\x07tmpName\x18\x01 \x01(\t\x12\x13\n\x0b\x61rgumentMap\x18\x02 \x01(\x0c\"!\n\x11RenderingResponse\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\tB\x05Z\x03rpcb\x06proto3'
 )
 
 

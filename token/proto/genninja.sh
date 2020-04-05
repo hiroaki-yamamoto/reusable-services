@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 DIR=$(dirname $(realpath $0))
-packagePath="github.com/hiroaki-yamamoto/token/rpc"
+packagePath="rpc"
 
 cat > $(dirname $0)/build.ninja << EOF
 backFlags = --go_out=plugins=grpc
@@ -30,8 +30,6 @@ build tmp/${packagePath}/$childDir/${fname}.pb.go: protoc $(
   flags = \$backFlags
   outdir = tmp
 
-build \$backOut/$childDir/${fname}.pb.go: mv tmp/${packagePath}/$childDir/${fname}.pb.go
-
-$frontSc
+build \$backOut/$childDir/${fname}.pb.go: mv tmp/$childDir/${fname}.pb.go
 EOF
 done

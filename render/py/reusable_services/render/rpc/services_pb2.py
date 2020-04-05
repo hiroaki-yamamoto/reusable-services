@@ -18,8 +18,8 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='services.proto',
   package='render',
   syntax='proto3',
-  serialized_options=b'Z)github.com/hiroaki-yamamoto/render/go/rpc',
-  serialized_pb=b'\n\x0eservices.proto\x12\x06render\x1a\x0cmodels.proto2P\n\x0fTemplateService\x12=\n\x06render\x12\x18.render.RenderingRequest\x1a\x19.render.RenderingResponseB+Z)github.com/hiroaki-yamamoto/render/go/rpcb\x06proto3'
+  serialized_options=b'Z\003rpc',
+  serialized_pb=b'\n\x0eservices.proto\x12\x06render\x1a\x0cmodels.proto2P\n\x0fTemplateService\x12=\n\x06render\x12\x18.render.RenderingRequest\x1a\x19.render.RenderingResponseB\x05Z\x03rpcb\x06proto3'
   ,
   dependencies=[models__pb2.DESCRIPTOR,])
 

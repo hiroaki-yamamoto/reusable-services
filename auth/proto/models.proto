@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package auth.models;
 
+option go_package = "rpc";
+
 message AuthInfo {
   string id = 1;
   string userName = 2;
