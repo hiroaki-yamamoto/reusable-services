@@ -10,8 +10,9 @@ message AuthInfo {
   string email = 3;
   string pw = 4;
   string pwConfirm = 5;
-  bool isActive = 6;
-  string lockReason = 7;
+  string OTPSecret = 6;
+  bool isActive = 7;
+  string lockReason = 8;
 }
 
 message AccessToken {
