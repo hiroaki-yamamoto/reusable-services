@@ -1,4 +1,7 @@
 package crypto
 
-// HashFunc represents a function that creates a password-hash from body and salt.
-type HashFunc func(body string, salt string) (digest []byte, err error)
+// PasswordHasher indicates the password hashing algorithm.
+type PasswordHasher interface {
+	Encode(body string, salt string) (digest []byte, err error)
+	GetAlgoName() string
+}

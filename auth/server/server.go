@@ -13,11 +13,11 @@ type TemplateMap struct {
 
 // PublicServer represents an auth server.
 type PublicServer struct {
-	PWHashAlgo []crypto.HashFunc
+	PWHashAlgo []crypto.PasswordHasher
 	Templates  *TemplateMap
 }
 
 // NewPublicServer creates a new isntance of Server
-func NewPublicServer(hashAlgo []crypto.HashFunc) *PublicServer {
+func NewPublicServer(hashAlgo []crypto.PasswordHasher) *PublicServer {
 	return &PublicServer{PWHashAlgo: hashAlgo}
 }
