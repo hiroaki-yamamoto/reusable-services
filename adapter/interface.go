@@ -12,6 +12,7 @@ type UpdateSummary struct {
 
 // IAdapter indicates the interface of the adapter.
 type IAdapter interface {
+	Count(ctx context.Context, query interface{}) (int64, error)
 	Find(
 		ctx context.Context, // The context
 		query interface{}, // Query
