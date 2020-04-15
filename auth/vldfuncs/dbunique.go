@@ -17,7 +17,9 @@ func DBUnique(logger *zap.Logger, adapter adapter.IAdapter) validator.FuncCtx {
 		query[fieldName] = fl.Field().Interface()
 		count, err := adapter.Count(ctx, query)
 		if err != nil {
-			logger.Error("DBUnique has error", zap.Error(err))
+			logger.Error(
+				"DBUnique has error", zap.Any("query", query), zap.Error(err),
+			)
 		}
 		return count < 1
 	}
