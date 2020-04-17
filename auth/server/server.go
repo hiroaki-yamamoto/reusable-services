@@ -4,6 +4,8 @@ import (
 	"github.com/hiroaki-yamamoto/reusable-services/adapter"
 	"github.com/hiroaki-yamamoto/reusable-services/auth/crypto"
 	"github.com/hiroaki-yamamoto/reusable-services/auth/vldfuncs"
+	renderRPC "github.com/hiroaki-yamamoto/reusable-services/render/go/rpc"
+	tokenRPC "github.com/hiroaki-yamamoto/reusable-services/token/rpc"
 	"go.uber.org/zap"
 
 	vld "github.com/go-playground/validator/v10"
@@ -25,14 +27,19 @@ type PublicServer struct {
 	PWHashAlgo []crypto.PasswordHasher
 	Logger     *zap.Logger
 	Templates  *TemplateMap
+	TokenCli   tokenRPC.TokenClient
+	RenderCli  renderRPC.TemplateServiceClient
 	checker    *vld.Validate
 }
 
 // NewPublicServer creates a new isntance of Server
 func NewPublicServer(
-	hashAlgo []crypto.PasswordHasher,
 	adapter adapter.IAdapter,
+	hashAlgo []crypto.PasswordHasher,
 	logger *zap.Logger,
+	templates *TemplateMap,
+	tokenClient tokenRPC.TokenClient,
+	renderClient renderRPC.TemplateServiceClient,
 ) *PublicServer {
 	checker := vld.New()
 	checker.RegisterValidationCtx(
@@ -42,6 +49,9 @@ func NewPublicServer(
 		PWHashAlgo: hashAlgo,
 		Adapter:    adapter,
 		Logger:     logger,
+		Templates:  templates,
+		TokenCli:   tokenClient,
+		RenderCli:  renderClient,
 		checker:    checker,
 	}
 }
