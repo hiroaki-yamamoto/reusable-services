@@ -1,6 +1,13 @@
 package server
 
-import "github.com/hiroaki-yamamoto/reusable-services/auth/crypto"
+import (
+	"github.com/hiroaki-yamamoto/reusable-services/adapter"
+	"github.com/hiroaki-yamamoto/reusable-services/auth/crypto"
+	"github.com/hiroaki-yamamoto/reusable-services/auth/vldfuncs"
+	"go.uber.org/zap"
+
+	vld "github.com/go-playground/validator/v10"
+)
 
 // TemplateMap represents a structure that has template names corresponding
 // to the templates
@@ -12,12 +19,29 @@ type TemplateMap struct {
 }
 
 // PublicServer represents an auth server.
+// Note that this server depedns on token and render services.
 type PublicServer struct {
+	Adapter    adapter.IAdapter
 	PWHashAlgo []crypto.PasswordHasher
+	Logger     *zap.Logger
 	Templates  *TemplateMap
+	checker    *vld.Validate
 }
 
 // NewPublicServer creates a new isntance of Server
-func NewPublicServer(hashAlgo []crypto.PasswordHasher) *PublicServer {
-	return &PublicServer{PWHashAlgo: hashAlgo}
+func NewPublicServer(
+	hashAlgo []crypto.PasswordHasher,
+	adapter adapter.IAdapter,
+	logger *zap.Logger,
+) *PublicServer {
+	checker := vld.New()
+	checker.RegisterValidationCtx(
+		"dbunique", vldfuncs.DBUnique(logger, adapter),
+	)
+	return &PublicServer{
+		PWHashAlgo: hashAlgo,
+		Adapter:    adapter,
+		Logger:     logger,
+		checker:    checker,
+	}
 }

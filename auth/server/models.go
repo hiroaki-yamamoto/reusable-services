@@ -22,6 +22,6 @@ type Auth struct {
 	UserName  string `validate:"required,dbunique"`
 	Email     string `validate:"required,dbunique,email"`
 	PWHash    []byte `validate:"required"`
-	PWAlgo    string
+	PWAlgo    string `validate:"required"`
 	OTPSecret string `validate:"base36"`
 }

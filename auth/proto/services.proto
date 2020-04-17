@@ -5,10 +5,16 @@ import "models.proto";
 
 option go_package = "rpc";
 
+message ActivationRequest {
+  string token = 1;
+  string pw = 2;
+  string pwConfirm = 3;
+  string otpSecret = 4;
+}
+
 message AuthRequest {
   string userName = 1;
   string password = 2;
-  string otp = 3;
 }
 
 message CredentialChangeRequest1 {
@@ -24,11 +30,15 @@ message CredentialChangeRequest2 {
   string confirm = 5;
 }
 
-message ReminerRequest1 {
+message RemindRequest1 {
   string email = 1;
 }
 
-message ReminerRequest2 {
+message RegistRequest {
+  string email = 1;
+}
+
+message RemindRequest2 {
   string token = 1;
   string email = 2;
   string new = 3;
@@ -39,12 +49,8 @@ message UserExistence {
   bool exists = 2;
 }
 
-message ActivationRequest {
-  string token = 1;
-}
-
 service Auth {
-  rpc signUp(auth.models.AuthInfo) returns (google.protobuf.Empty);
+  rpc signUp(RegistRequest) returns (google.protobuf.Empty);
   rpc activate(ActivationRequest) returns (google.protobuf.Empty);
   rpc getAuthInfo(auth.models.AccessToken) returns (auth.models.AuthInfo);
   rpc checkUserExists(UserExistence) returns (UserExistence);
@@ -52,7 +58,9 @@ service Auth {
   rpc requestEmailChange(CredentialChangeRequest1) returns (google.protobuf.Empty);
   rpc chamgeEmail(CredentialChangeRequest2) returns (google.protobuf.Empty);
   rpc requestPWChange(CredentialChangeRequest1) returns (google.protobuf.Empty);
-  rpc chamgePW(CredentialChangeRequest2) returns (google.protobuf.Empty);
+  rpc changePW(CredentialChangeRequest2) returns (google.protobuf.Empty);
+  rpc requestResetPW(RemindRequest1) returns (google.protobuf.Empty);
+  rpc resetPW(RemindRequest2) returns (google.protobuf.Empty);
   rpc requestUserNameChange(CredentialChangeRequest1) returns (google.protobuf.Empty);
   rpc chamgeUserName(CredentialChangeRequest2) returns (google.protobuf.Empty);
   rpc requestChangeOTP(auth.models.AccessToken) returns (google.protobuf.Empty);

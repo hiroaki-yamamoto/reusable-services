@@ -8,9 +8,6 @@ message AuthInfo {
   string id = 1;
   string userName = 2;
   string email = 3;
-  string pw = 4;
-  string pwConfirm = 5;
-  string OTPSecret = 6;
   bool isActive = 7;
   string lockReason = 8;
 }

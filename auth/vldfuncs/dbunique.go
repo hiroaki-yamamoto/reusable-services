@@ -20,6 +20,7 @@ func DBUnique(logger *zap.Logger, adapter adapter.IAdapter) validator.FuncCtx {
 			logger.Error(
 				"DBUnique has error", zap.Any("query", query), zap.Error(err),
 			)
+			return false
 		}
 		return count < 1
 	}

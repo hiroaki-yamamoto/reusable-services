@@ -25,10 +25,72 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+type ActivationRequest struct {
+	Token                string   `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	Pw                   string   `protobuf:"bytes,2,opt,name=pw,proto3" json:"pw,omitempty"`
+	PwConfirm            string   `protobuf:"bytes,3,opt,name=pwConfirm,proto3" json:"pwConfirm,omitempty"`
+	OtpSecret            string   `protobuf:"bytes,4,opt,name=otpSecret,proto3" json:"otpSecret,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ActivationRequest) Reset()         { *m = ActivationRequest{} }
+func (m *ActivationRequest) String() string { return proto.CompactTextString(m) }
+func (*ActivationRequest) ProtoMessage()    {}
+func (*ActivationRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8e16ccb8c5307b32, []int{0}
+}
+
+func (m *ActivationRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ActivationRequest.Unmarshal(m, b)
+}
+func (m *ActivationRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ActivationRequest.Marshal(b, m, deterministic)
+}
+func (m *ActivationRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ActivationRequest.Merge(m, src)
+}
+func (m *ActivationRequest) XXX_Size() int {
+	return xxx_messageInfo_ActivationRequest.Size(m)
+}
+func (m *ActivationRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ActivationRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ActivationRequest proto.InternalMessageInfo
+
+func (m *ActivationRequest) GetToken() string {
+	if m != nil {
+		return m.Token
+	}
+	return ""
+}
+
+func (m *ActivationRequest) GetPw() string {
+	if m != nil {
+		return m.Pw
+	}
+	return ""
+}
+
+func (m *ActivationRequest) GetPwConfirm() string {
+	if m != nil {
+		return m.PwConfirm
+	}
+	return ""
+}
+
+func (m *ActivationRequest) GetOtpSecret() string {
+	if m != nil {
+		return m.OtpSecret
+	}
+	return ""
+}
+
 type AuthRequest struct {
 	UserName             string   `protobuf:"bytes,1,opt,name=userName,proto3" json:"userName,omitempty"`
 	Password             string   `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
-	Otp                  string   `protobuf:"bytes,3,opt,name=otp,proto3" json:"otp,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -38,7 +100,7 @@ func (m *AuthRequest) Reset()         { *m = AuthRequest{} }
 func (m *AuthRequest) String() string { return proto.CompactTextString(m) }
 func (*AuthRequest) ProtoMessage()    {}
 func (*AuthRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8e16ccb8c5307b32, []int{0}
+	return fileDescriptor_8e16ccb8c5307b32, []int{1}
 }
 
 func (m *AuthRequest) XXX_Unmarshal(b []byte) error {
@@ -73,13 +135,6 @@ func (m *AuthRequest) GetPassword() string {
 	return ""
 }
 
-func (m *AuthRequest) GetOtp() string {
-	if m != nil {
-		return m.Otp
-	}
-	return ""
-}
-
 type CredentialChangeRequest1 struct {
 	Token                *AccessToken `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
 	Current              string       `protobuf:"bytes,2,opt,name=current,proto3" json:"current,omitempty"`
@@ -92,7 +147,7 @@ func (m *CredentialChangeRequest1) Reset()         { *m = CredentialChangeReques
 func (m *CredentialChangeRequest1) String() string { return proto.CompactTextString(m) }
 func (*CredentialChangeRequest1) ProtoMessage()    {}
 func (*CredentialChangeRequest1) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8e16ccb8c5307b32, []int{1}
+	return fileDescriptor_8e16ccb8c5307b32, []int{2}
 }
 
 func (m *CredentialChangeRequest1) XXX_Unmarshal(b []byte) error {
@@ -142,7 +197,7 @@ func (m *CredentialChangeRequest2) Reset()         { *m = CredentialChangeReques
 func (m *CredentialChangeRequest2) String() string { return proto.CompactTextString(m) }
 func (*CredentialChangeRequest2) ProtoMessage()    {}
 func (*CredentialChangeRequest2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8e16ccb8c5307b32, []int{2}
+	return fileDescriptor_8e16ccb8c5307b32, []int{3}
 }
 
 func (m *CredentialChangeRequest2) XXX_Unmarshal(b []byte) error {
@@ -198,46 +253,85 @@ func (m *CredentialChangeRequest2) GetConfirm() string {
 	return ""
 }
 
-type ReminerRequest1 struct {
+type RemindRequest1 struct {
 	Email                string   `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ReminerRequest1) Reset()         { *m = ReminerRequest1{} }
-func (m *ReminerRequest1) String() string { return proto.CompactTextString(m) }
-func (*ReminerRequest1) ProtoMessage()    {}
-func (*ReminerRequest1) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8e16ccb8c5307b32, []int{3}
+func (m *RemindRequest1) Reset()         { *m = RemindRequest1{} }
+func (m *RemindRequest1) String() string { return proto.CompactTextString(m) }
+func (*RemindRequest1) ProtoMessage()    {}
+func (*RemindRequest1) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8e16ccb8c5307b32, []int{4}
 }
 
-func (m *ReminerRequest1) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ReminerRequest1.Unmarshal(m, b)
+func (m *RemindRequest1) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_RemindRequest1.Unmarshal(m, b)
 }
-func (m *ReminerRequest1) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ReminerRequest1.Marshal(b, m, deterministic)
+func (m *RemindRequest1) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_RemindRequest1.Marshal(b, m, deterministic)
 }
-func (m *ReminerRequest1) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ReminerRequest1.Merge(m, src)
+func (m *RemindRequest1) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RemindRequest1.Merge(m, src)
 }
-func (m *ReminerRequest1) XXX_Size() int {
-	return xxx_messageInfo_ReminerRequest1.Size(m)
+func (m *RemindRequest1) XXX_Size() int {
+	return xxx_messageInfo_RemindRequest1.Size(m)
 }
-func (m *ReminerRequest1) XXX_DiscardUnknown() {
-	xxx_messageInfo_ReminerRequest1.DiscardUnknown(m)
+func (m *RemindRequest1) XXX_DiscardUnknown() {
+	xxx_messageInfo_RemindRequest1.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ReminerRequest1 proto.InternalMessageInfo
+var xxx_messageInfo_RemindRequest1 proto.InternalMessageInfo
 
-func (m *ReminerRequest1) GetEmail() string {
+func (m *RemindRequest1) GetEmail() string {
 	if m != nil {
 		return m.Email
 	}
 	return ""
 }
 
-type ReminerRequest2 struct {
+type RegistRequest struct {
+	Email                string   `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *RegistRequest) Reset()         { *m = RegistRequest{} }
+func (m *RegistRequest) String() string { return proto.CompactTextString(m) }
+func (*RegistRequest) ProtoMessage()    {}
+func (*RegistRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8e16ccb8c5307b32, []int{5}
+}
+
+func (m *RegistRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_RegistRequest.Unmarshal(m, b)
+}
+func (m *RegistRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_RegistRequest.Marshal(b, m, deterministic)
+}
+func (m *RegistRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RegistRequest.Merge(m, src)
+}
+func (m *RegistRequest) XXX_Size() int {
+	return xxx_messageInfo_RegistRequest.Size(m)
+}
+func (m *RegistRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_RegistRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RegistRequest proto.InternalMessageInfo
+
+func (m *RegistRequest) GetEmail() string {
+	if m != nil {
+		return m.Email
+	}
+	return ""
+}
+
+type RemindRequest2 struct {
 	Token                string   `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
 	Email                string   `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
 	New                  string   `protobuf:"bytes,3,opt,name=new,proto3" json:"new,omitempty"`
@@ -246,46 +340,46 @@ type ReminerRequest2 struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ReminerRequest2) Reset()         { *m = ReminerRequest2{} }
-func (m *ReminerRequest2) String() string { return proto.CompactTextString(m) }
-func (*ReminerRequest2) ProtoMessage()    {}
-func (*ReminerRequest2) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8e16ccb8c5307b32, []int{4}
+func (m *RemindRequest2) Reset()         { *m = RemindRequest2{} }
+func (m *RemindRequest2) String() string { return proto.CompactTextString(m) }
+func (*RemindRequest2) ProtoMessage()    {}
+func (*RemindRequest2) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8e16ccb8c5307b32, []int{6}
 }
 
-func (m *ReminerRequest2) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ReminerRequest2.Unmarshal(m, b)
+func (m *RemindRequest2) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_RemindRequest2.Unmarshal(m, b)
 }
-func (m *ReminerRequest2) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ReminerRequest2.Marshal(b, m, deterministic)
+func (m *RemindRequest2) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_RemindRequest2.Marshal(b, m, deterministic)
 }
-func (m *ReminerRequest2) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ReminerRequest2.Merge(m, src)
+func (m *RemindRequest2) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RemindRequest2.Merge(m, src)
 }
-func (m *ReminerRequest2) XXX_Size() int {
-	return xxx_messageInfo_ReminerRequest2.Size(m)
+func (m *RemindRequest2) XXX_Size() int {
+	return xxx_messageInfo_RemindRequest2.Size(m)
 }
-func (m *ReminerRequest2) XXX_DiscardUnknown() {
-	xxx_messageInfo_ReminerRequest2.DiscardUnknown(m)
+func (m *RemindRequest2) XXX_DiscardUnknown() {
+	xxx_messageInfo_RemindRequest2.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ReminerRequest2 proto.InternalMessageInfo
+var xxx_messageInfo_RemindRequest2 proto.InternalMessageInfo
 
-func (m *ReminerRequest2) GetToken() string {
+func (m *RemindRequest2) GetToken() string {
 	if m != nil {
 		return m.Token
 	}
 	return ""
 }
 
-func (m *ReminerRequest2) GetEmail() string {
+func (m *RemindRequest2) GetEmail() string {
 	if m != nil {
 		return m.Email
 	}
 	return ""
 }
 
-func (m *ReminerRequest2) GetNew() string {
+func (m *RemindRequest2) GetNew() string {
 	if m != nil {
 		return m.New
 	}
@@ -304,7 +398,7 @@ func (m *UserExistence) Reset()         { *m = UserExistence{} }
 func (m *UserExistence) String() string { return proto.CompactTextString(m) }
 func (*UserExistence) ProtoMessage()    {}
 func (*UserExistence) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8e16ccb8c5307b32, []int{5}
+	return fileDescriptor_8e16ccb8c5307b32, []int{7}
 }
 
 func (m *UserExistence) XXX_Unmarshal(b []byte) error {
@@ -339,93 +433,59 @@ func (m *UserExistence) GetExists() bool {
 	return false
 }
 
-type ActivationRequest struct {
-	Token                string   `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *ActivationRequest) Reset()         { *m = ActivationRequest{} }
-func (m *ActivationRequest) String() string { return proto.CompactTextString(m) }
-func (*ActivationRequest) ProtoMessage()    {}
-func (*ActivationRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8e16ccb8c5307b32, []int{6}
-}
-
-func (m *ActivationRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ActivationRequest.Unmarshal(m, b)
-}
-func (m *ActivationRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ActivationRequest.Marshal(b, m, deterministic)
-}
-func (m *ActivationRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ActivationRequest.Merge(m, src)
-}
-func (m *ActivationRequest) XXX_Size() int {
-	return xxx_messageInfo_ActivationRequest.Size(m)
-}
-func (m *ActivationRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_ActivationRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_ActivationRequest proto.InternalMessageInfo
-
-func (m *ActivationRequest) GetToken() string {
-	if m != nil {
-		return m.Token
-	}
-	return ""
-}
-
 func init() {
+	proto.RegisterType((*ActivationRequest)(nil), "ActivationRequest")
 	proto.RegisterType((*AuthRequest)(nil), "AuthRequest")
 	proto.RegisterType((*CredentialChangeRequest1)(nil), "CredentialChangeRequest1")
 	proto.RegisterType((*CredentialChangeRequest2)(nil), "CredentialChangeRequest2")
-	proto.RegisterType((*ReminerRequest1)(nil), "ReminerRequest1")
-	proto.RegisterType((*ReminerRequest2)(nil), "ReminerRequest2")
+	proto.RegisterType((*RemindRequest1)(nil), "RemindRequest1")
+	proto.RegisterType((*RegistRequest)(nil), "RegistRequest")
+	proto.RegisterType((*RemindRequest2)(nil), "RemindRequest2")
 	proto.RegisterType((*UserExistence)(nil), "UserExistence")
-	proto.RegisterType((*ActivationRequest)(nil), "ActivationRequest")
 }
 
 func init() { proto.RegisterFile("services.proto", fileDescriptor_8e16ccb8c5307b32) }
 
 var fileDescriptor_8e16ccb8c5307b32 = []byte{
-	// 535 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x93, 0xdf, 0x6e, 0xd3, 0x30,
-	0x14, 0xc6, 0xd5, 0x75, 0x2d, 0xdd, 0xe9, 0x68, 0x87, 0xb5, 0x4d, 0x21, 0xdc, 0xa0, 0xdc, 0x00,
-	0x37, 0x9e, 0x56, 0x24, 0xe0, 0x06, 0x44, 0x29, 0x15, 0x82, 0x0b, 0x56, 0x55, 0xad, 0x2a, 0x71,
-	0x97, 0xb9, 0xa7, 0x49, 0xb4, 0xc4, 0x0e, 0xb6, 0xb3, 0xc2, 0x5b, 0xf1, 0x0a, 0xbc, 0x19, 0x4a,
-	0xec, 0x84, 0x76, 0x5b, 0x26, 0xe8, 0x5d, 0x4e, 0xce, 0x9f, 0xef, 0xe7, 0xe3, 0xcf, 0xd0, 0x53,
-	0x28, 0xaf, 0x23, 0x86, 0x8a, 0xa6, 0x52, 0x68, 0xe1, 0x3e, 0x09, 0x84, 0x08, 0x62, 0x3c, 0x2b,
-	0xa2, 0xcb, 0x6c, 0x75, 0x86, 0x49, 0xaa, 0x7f, 0xda, 0xe4, 0x61, 0x22, 0x96, 0x18, 0xdb, 0x52,
-	0x6f, 0x01, 0xdd, 0x61, 0xa6, 0xc3, 0x29, 0x7e, 0xcf, 0x50, 0x69, 0xe2, 0x42, 0x27, 0x53, 0x28,
-	0xbf, 0xfa, 0x09, 0x3a, 0x8d, 0xa7, 0x8d, 0xe7, 0x07, 0xd3, 0x2a, 0xce, 0x73, 0xa9, 0xaf, 0xd4,
-	0x5a, 0xc8, 0xa5, 0xb3, 0x67, 0x72, 0x65, 0x4c, 0x8e, 0xa0, 0x29, 0x74, 0xea, 0x34, 0x8b, 0xdf,
-	0xf9, 0xa7, 0xb7, 0x04, 0x67, 0x24, 0x71, 0x89, 0x5c, 0x47, 0x7e, 0x3c, 0x0a, 0x7d, 0x1e, 0xa0,
-	0x15, 0x39, 0x27, 0x14, 0x5a, 0x5a, 0x5c, 0x21, 0x2f, 0x24, 0xba, 0x03, 0x87, 0xfa, 0x99, 0x0e,
-	0xa9, 0xe5, 0x1a, 0x32, 0x86, 0x4a, 0xcd, 0xf2, 0xfc, 0xd4, 0x94, 0x11, 0x07, 0x1e, 0xb0, 0x4c,
-	0x4a, 0xe4, 0xda, 0x0a, 0x97, 0xa1, 0xf7, 0xab, 0x51, 0x2b, 0x33, 0x20, 0x6f, 0x00, 0x62, 0x11,
-	0x44, 0x7c, 0xf6, 0x4f, 0x5a, 0x1b, 0xb5, 0xe4, 0xb8, 0x04, 0x34, 0x72, 0xb7, 0x31, 0x9a, 0x5b,
-	0x18, 0xf9, 0xf1, 0x39, 0xae, 0x9d, 0x7d, 0x73, 0x7c, 0x8e, 0xeb, 0xa2, 0x56, 0xf0, 0x55, 0x24,
-	0x13, 0xa7, 0x65, 0x6b, 0x4d, 0xe8, 0x3d, 0x83, 0xfe, 0x14, 0x93, 0x88, 0xa3, 0xac, 0xf6, 0x71,
-	0x0c, 0x2d, 0x4c, 0xfc, 0x28, 0xb6, 0x2b, 0x37, 0x81, 0x77, 0x71, 0xb3, 0x70, 0xf0, 0x97, 0xab,
-	0xb1, 0xc9, 0x55, 0xb5, 0xef, 0x6d, 0xb4, 0x97, 0x4c, 0xcd, 0x8a, 0xc9, 0x1b, 0xc1, 0xc3, 0xb9,
-	0x42, 0x39, 0xfe, 0x11, 0x29, 0x8d, 0x9c, 0xe1, 0xbd, 0xb7, 0x7d, 0x0a, 0x6d, 0xcc, 0x0b, 0x55,
-	0x31, 0xb5, 0x33, 0xb5, 0x91, 0xf7, 0x02, 0x1e, 0x0d, 0x99, 0x8e, 0xae, 0x7d, 0x1d, 0x09, 0x5e,
-	0xda, 0xe6, 0x4e, 0xae, 0xc1, 0xef, 0x36, 0xec, 0xe7, 0xe6, 0x22, 0xaf, 0xa1, 0xad, 0xa2, 0x80,
-	0xcf, 0x53, 0x72, 0xb2, 0xbd, 0xfe, 0x4c, 0x87, 0x9f, 0xf9, 0x4a, 0xb8, 0xa7, 0xd4, 0x38, 0x96,
-	0x96, 0x8e, 0xa5, 0xe3, 0xdc, 0xb1, 0xe4, 0x15, 0x74, 0x7c, 0x23, 0x86, 0x84, 0xd0, 0x5b, 0xba,
-	0xb5, 0x7d, 0xef, 0xa0, 0x1b, 0xa0, 0x2e, 0xc7, 0x93, 0xda, 0x4b, 0x77, 0xef, 0xe6, 0x21, 0xe7,
-	0xd0, 0x67, 0x21, 0xb2, 0xab, 0x6a, 0x5d, 0x8a, 0xf4, 0xe8, 0xd6, 0xee, 0xdc, 0x1b, 0x31, 0xa1,
-	0xb0, 0x9f, 0x8f, 0x22, 0x87, 0x74, 0xe3, 0x3d, 0xb9, 0xb5, 0xca, 0xe4, 0x13, 0x10, 0x69, 0x8a,
-	0xc6, 0xf9, 0x75, 0x19, 0xeb, 0x92, 0xc7, 0xb4, 0xee, 0xd1, 0xd4, 0x9e, 0xf5, 0x3d, 0x74, 0x59,
-	0xe8, 0x27, 0x01, 0x16, 0x73, 0xea, 0x27, 0x0c, 0x6a, 0x27, 0x7c, 0x84, 0xbe, 0x45, 0x99, 0x2c,
-	0x76, 0xe7, 0x78, 0x0b, 0x1d, 0xc3, 0x31, 0x59, 0xec, 0x02, 0xf1, 0x05, 0x4e, 0x2c, 0xc4, 0xdc,
-	0x5a, 0x70, 0x77, 0x94, 0x11, 0xf4, 0x0c, 0x4a, 0x39, 0x6a, 0xb7, 0xad, 0x1c, 0x59, 0x20, 0xd3,
-	0x70, 0x31, 0x9b, 0xdc, 0x63, 0xa4, 0x7a, 0x27, 0x1e, 0xb0, 0xaa, 0xfd, 0xff, 0x29, 0x3e, 0xb4,
-	0xbe, 0x35, 0x65, 0xca, 0x2e, 0xdb, 0xc5, 0xef, 0x97, 0x7f, 0x02, 0x00, 0x00, 0xff, 0xff, 0x5b,
-	0x53, 0xc7, 0xc7, 0xea, 0x05, 0x00, 0x00,
+	// 593 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x53, 0x5d, 0x6f, 0xd3, 0x3c,
+	0x14, 0xd6, 0xda, 0x75, 0xeb, 0x4e, 0xb7, 0x6c, 0xaf, 0xb5, 0x4d, 0x79, 0x03, 0x17, 0x28, 0x12,
+	0x88, 0x2b, 0x8f, 0x05, 0x09, 0xc1, 0x05, 0x88, 0x51, 0x2a, 0x04, 0x17, 0xa3, 0x0a, 0x9b, 0x26,
+	0x71, 0x97, 0xb9, 0xa7, 0x69, 0xb4, 0xc6, 0x0e, 0xb6, 0xb3, 0xc2, 0x4f, 0xe2, 0x8e, 0x9f, 0x88,
+	0x92, 0x38, 0x59, 0x3a, 0xe6, 0x09, 0x7a, 0xe7, 0xc7, 0xe7, 0xe3, 0x79, 0xce, 0x17, 0x38, 0x0a,
+	0xe5, 0x75, 0xc2, 0x50, 0xd1, 0x4c, 0x0a, 0x2d, 0xbc, 0x07, 0xb1, 0x10, 0xf1, 0x1c, 0x8f, 0x4a,
+	0x74, 0x99, 0x4f, 0x8f, 0x30, 0xcd, 0xf4, 0x0f, 0x63, 0xdc, 0x4e, 0xc5, 0x04, 0xe7, 0xc6, 0xd5,
+	0xcf, 0xe1, 0xbf, 0x13, 0xa6, 0x93, 0xeb, 0x48, 0x27, 0x82, 0x87, 0xf8, 0x2d, 0x47, 0xa5, 0xc9,
+	0x3e, 0xf4, 0xb4, 0xb8, 0x42, 0xee, 0xae, 0x3d, 0x5a, 0x7b, 0xba, 0x15, 0x56, 0x80, 0x38, 0xd0,
+	0xc9, 0x16, 0x6e, 0xa7, 0xfc, 0xea, 0x64, 0x0b, 0xf2, 0x10, 0xb6, 0xb2, 0xc5, 0x50, 0xf0, 0x69,
+	0x22, 0x53, 0xb7, 0x5b, 0x7e, 0xdf, 0x7c, 0x14, 0x56, 0xa1, 0xb3, 0x2f, 0xc8, 0x24, 0x6a, 0x77,
+	0xbd, 0xb2, 0x36, 0x1f, 0xfe, 0x08, 0x06, 0x27, 0xb9, 0x9e, 0xd5, 0x84, 0x1e, 0xf4, 0x73, 0x85,
+	0xf2, 0x34, 0x4a, 0xd1, 0x70, 0x36, 0xb8, 0xb0, 0x65, 0x91, 0x52, 0x0b, 0x21, 0x27, 0x86, 0xbc,
+	0xc1, 0xfe, 0x04, 0xdc, 0xa1, 0xc4, 0x09, 0x72, 0x9d, 0x44, 0xf3, 0xe1, 0x2c, 0xe2, 0x31, 0x9a,
+	0x94, 0xc7, 0x84, 0xb6, 0x8b, 0x18, 0x04, 0x2e, 0x8d, 0x72, 0x3d, 0xa3, 0xa6, 0xf8, 0x13, 0xc6,
+	0x50, 0xa9, 0xb3, 0xc2, 0x5e, 0x97, 0xe7, 0xc2, 0x26, 0xcb, 0xa5, 0x44, 0xae, 0x0d, 0x4d, 0x0d,
+	0xfd, 0x5f, 0x6b, 0x56, 0x9a, 0x80, 0xbc, 0x04, 0x98, 0x8b, 0x38, 0xe1, 0x67, 0x7f, 0xc5, 0xd5,
+	0xf2, 0xbd, 0xe9, 0x72, 0xa7, 0xdd, 0xe5, 0x96, 0x8c, 0xee, 0x92, 0x0c, 0xb2, 0x07, 0x5d, 0x8e,
+	0x0b, 0xd3, 0xcb, 0xe2, 0x59, 0xfa, 0x9a, 0xfe, 0xf7, 0x8c, 0x6f, 0x05, 0xfd, 0x27, 0xe0, 0x84,
+	0x98, 0x26, 0x7c, 0xd2, 0xb4, 0x63, 0x1f, 0x7a, 0x98, 0x46, 0xc9, 0xbc, 0x9e, 0x69, 0x09, 0xfc,
+	0xc7, 0xb0, 0x13, 0x62, 0x9c, 0x28, 0xdd, 0x1a, 0xfd, 0x1d, 0x6e, 0xa7, 0xb7, 0xd2, 0x05, 0x96,
+	0x15, 0x69, 0xa2, 0x3b, 0xad, 0xe8, 0x5a, 0x78, 0xb7, 0x11, 0xee, 0x0f, 0x61, 0xe7, 0x5c, 0xa1,
+	0x1c, 0x7d, 0x4f, 0x94, 0x46, 0xce, 0xf0, 0xde, 0x05, 0x38, 0x84, 0x0d, 0x2c, 0x1c, 0x55, 0x99,
+	0xb5, 0x1f, 0x1a, 0x14, 0xfc, 0xdc, 0x84, 0xf5, 0x62, 0x89, 0xc8, 0x33, 0xd8, 0x50, 0x49, 0xcc,
+	0xcf, 0x33, 0xe2, 0xd0, 0xa5, 0x6a, 0xbc, 0x43, 0x5a, 0x5d, 0x02, 0xad, 0x2f, 0x81, 0x8e, 0x8a,
+	0x4b, 0x20, 0x2f, 0xa0, 0x1f, 0x55, 0x5b, 0x8f, 0x84, 0xd0, 0x3f, 0x0e, 0xc0, 0x1a, 0xf7, 0x06,
+	0x06, 0x31, 0xea, 0x82, 0xf4, 0x23, 0x9f, 0x0a, 0x62, 0x9d, 0xb3, 0x77, 0xb0, 0x6c, 0xa9, 0x03,
+	0x8e, 0x61, 0x97, 0xcd, 0x90, 0x5d, 0x35, 0xc5, 0x2b, 0xe2, 0xd0, 0xa5, 0x4e, 0x78, 0xb7, 0x30,
+	0xa1, 0xb0, 0x5e, 0xa4, 0x22, 0xdb, 0xb4, 0x75, 0x30, 0x9e, 0x95, 0x99, 0x7c, 0x00, 0x22, 0x2b,
+	0xa7, 0x51, 0xd1, 0xfc, 0x6a, 0x5b, 0xc9, 0xff, 0xd4, 0x76, 0x27, 0xd6, 0x5a, 0xdf, 0xc2, 0x80,
+	0xcd, 0xa2, 0x34, 0xc6, 0x32, 0x8f, 0x3d, 0x43, 0x60, 0xcd, 0xf0, 0x1e, 0x76, 0x8d, 0x94, 0xf1,
+	0xc5, 0xea, 0x3a, 0x5e, 0x43, 0x9f, 0x95, 0x9e, 0xe3, 0x8b, 0x55, 0x44, 0xbc, 0x02, 0xc7, 0x88,
+	0x08, 0x51, 0xa1, 0x1e, 0x5f, 0x90, 0x5d, 0xba, 0x7c, 0x1a, 0xd6, 0xd0, 0x00, 0x36, 0xe5, 0xdd,
+	0x31, 0x76, 0xba, 0x4f, 0x70, 0x60, 0xe8, 0xce, 0xcd, 0xfe, 0xae, 0x5e, 0xf9, 0x10, 0x9c, 0x6a,
+	0x02, 0x75, 0xaa, 0xd5, 0x86, 0xb0, 0x67, 0x04, 0x55, 0x01, 0x9f, 0xcf, 0xc6, 0xf7, 0xec, 0xad,
+	0x7d, 0xf1, 0xb7, 0x58, 0x13, 0xfe, 0xef, 0x2a, 0xde, 0xf5, 0xbe, 0x76, 0x65, 0xc6, 0x2e, 0x37,
+	0xca, 0xef, 0xe7, 0xbf, 0x03, 0x00, 0x00, 0xff, 0xff, 0xfe, 0xff, 0x1d, 0xbc, 0xb1, 0x06, 0x00,
+	0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -440,7 +500,7 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type AuthClient interface {
-	SignUp(ctx context.Context, in *AuthInfo, opts ...grpc.CallOption) (*empty.Empty, error)
+	SignUp(ctx context.Context, in *RegistRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	Activate(ctx context.Context, in *ActivationRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	GetAuthInfo(ctx context.Context, in *AccessToken, opts ...grpc.CallOption) (*AuthInfo, error)
 	CheckUserExists(ctx context.Context, in *UserExistence, opts ...grpc.CallOption) (*UserExistence, error)
@@ -448,7 +508,9 @@ type AuthClient interface {
 	RequestEmailChange(ctx context.Context, in *CredentialChangeRequest1, opts ...grpc.CallOption) (*empty.Empty, error)
 	ChamgeEmail(ctx context.Context, in *CredentialChangeRequest2, opts ...grpc.CallOption) (*empty.Empty, error)
 	RequestPWChange(ctx context.Context, in *CredentialChangeRequest1, opts ...grpc.CallOption) (*empty.Empty, error)
-	ChamgePW(ctx context.Context, in *CredentialChangeRequest2, opts ...grpc.CallOption) (*empty.Empty, error)
+	ChangePW(ctx context.Context, in *CredentialChangeRequest2, opts ...grpc.CallOption) (*empty.Empty, error)
+	RequestResetPW(ctx context.Context, in *RemindRequest1, opts ...grpc.CallOption) (*empty.Empty, error)
+	ResetPW(ctx context.Context, in *RemindRequest2, opts ...grpc.CallOption) (*empty.Empty, error)
 	RequestUserNameChange(ctx context.Context, in *CredentialChangeRequest1, opts ...grpc.CallOption) (*empty.Empty, error)
 	ChamgeUserName(ctx context.Context, in *CredentialChangeRequest2, opts ...grpc.CallOption) (*empty.Empty, error)
 	RequestChangeOTP(ctx context.Context, in *AccessToken, opts ...grpc.CallOption) (*empty.Empty, error)
@@ -463,7 +525,7 @@ func NewAuthClient(cc *grpc.ClientConn) AuthClient {
 	return &authClient{cc}
 }
 
-func (c *authClient) SignUp(ctx context.Context, in *AuthInfo, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *authClient) SignUp(ctx context.Context, in *RegistRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/Auth/signUp", in, out, opts...)
 	if err != nil {
@@ -535,9 +597,27 @@ func (c *authClient) RequestPWChange(ctx context.Context, in *CredentialChangeRe
 	return out, nil
 }
 
-func (c *authClient) ChamgePW(ctx context.Context, in *CredentialChangeRequest2, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *authClient) ChangePW(ctx context.Context, in *CredentialChangeRequest2, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/Auth/chamgePW", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/Auth/changePW", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authClient) RequestResetPW(ctx context.Context, in *RemindRequest1, opts ...grpc.CallOption) (*empty.Empty, error) {
+	out := new(empty.Empty)
+	err := c.cc.Invoke(ctx, "/Auth/requestResetPW", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authClient) ResetPW(ctx context.Context, in *RemindRequest2, opts ...grpc.CallOption) (*empty.Empty, error) {
+	out := new(empty.Empty)
+	err := c.cc.Invoke(ctx, "/Auth/resetPW", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -582,7 +662,7 @@ func (c *authClient) ChangeOTP(ctx context.Context, in *CredentialChangeRequest2
 
 // AuthServer is the server API for Auth service.
 type AuthServer interface {
-	SignUp(context.Context, *AuthInfo) (*empty.Empty, error)
+	SignUp(context.Context, *RegistRequest) (*empty.Empty, error)
 	Activate(context.Context, *ActivationRequest) (*empty.Empty, error)
 	GetAuthInfo(context.Context, *AccessToken) (*AuthInfo, error)
 	CheckUserExists(context.Context, *UserExistence) (*UserExistence, error)
@@ -590,7 +670,9 @@ type AuthServer interface {
 	RequestEmailChange(context.Context, *CredentialChangeRequest1) (*empty.Empty, error)
 	ChamgeEmail(context.Context, *CredentialChangeRequest2) (*empty.Empty, error)
 	RequestPWChange(context.Context, *CredentialChangeRequest1) (*empty.Empty, error)
-	ChamgePW(context.Context, *CredentialChangeRequest2) (*empty.Empty, error)
+	ChangePW(context.Context, *CredentialChangeRequest2) (*empty.Empty, error)
+	RequestResetPW(context.Context, *RemindRequest1) (*empty.Empty, error)
+	ResetPW(context.Context, *RemindRequest2) (*empty.Empty, error)
 	RequestUserNameChange(context.Context, *CredentialChangeRequest1) (*empty.Empty, error)
 	ChamgeUserName(context.Context, *CredentialChangeRequest2) (*empty.Empty, error)
 	RequestChangeOTP(context.Context, *AccessToken) (*empty.Empty, error)
@@ -601,7 +683,7 @@ type AuthServer interface {
 type UnimplementedAuthServer struct {
 }
 
-func (*UnimplementedAuthServer) SignUp(ctx context.Context, req *AuthInfo) (*empty.Empty, error) {
+func (*UnimplementedAuthServer) SignUp(ctx context.Context, req *RegistRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignUp not implemented")
 }
 func (*UnimplementedAuthServer) Activate(ctx context.Context, req *ActivationRequest) (*empty.Empty, error) {
@@ -625,8 +707,14 @@ func (*UnimplementedAuthServer) ChamgeEmail(ctx context.Context, req *Credential
 func (*UnimplementedAuthServer) RequestPWChange(ctx context.Context, req *CredentialChangeRequest1) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RequestPWChange not implemented")
 }
-func (*UnimplementedAuthServer) ChamgePW(ctx context.Context, req *CredentialChangeRequest2) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ChamgePW not implemented")
+func (*UnimplementedAuthServer) ChangePW(ctx context.Context, req *CredentialChangeRequest2) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChangePW not implemented")
+}
+func (*UnimplementedAuthServer) RequestResetPW(ctx context.Context, req *RemindRequest1) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RequestResetPW not implemented")
+}
+func (*UnimplementedAuthServer) ResetPW(ctx context.Context, req *RemindRequest2) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResetPW not implemented")
 }
 func (*UnimplementedAuthServer) RequestUserNameChange(ctx context.Context, req *CredentialChangeRequest1) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RequestUserNameChange not implemented")
@@ -646,7 +734,7 @@ func RegisterAuthServer(s *grpc.Server, srv AuthServer) {
 }
 
 func _Auth_SignUp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AuthInfo)
+	in := new(RegistRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -658,7 +746,7 @@ func _Auth_SignUp_Handler(srv interface{}, ctx context.Context, dec func(interfa
 		FullMethod: "/Auth/SignUp",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).SignUp(ctx, req.(*AuthInfo))
+		return srv.(AuthServer).SignUp(ctx, req.(*RegistRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -789,20 +877,56 @@ func _Auth_RequestPWChange_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Auth_ChamgePW_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Auth_ChangePW_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CredentialChangeRequest2)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServer).ChamgePW(ctx, in)
+		return srv.(AuthServer).ChangePW(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/Auth/ChamgePW",
+		FullMethod: "/Auth/ChangePW",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).ChamgePW(ctx, req.(*CredentialChangeRequest2))
+		return srv.(AuthServer).ChangePW(ctx, req.(*CredentialChangeRequest2))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Auth_RequestResetPW_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemindRequest1)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).RequestResetPW(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Auth/RequestResetPW",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).RequestResetPW(ctx, req.(*RemindRequest1))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Auth_ResetPW_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemindRequest2)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).ResetPW(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Auth/ResetPW",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).ResetPW(ctx, req.(*RemindRequest2))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -916,8 +1040,16 @@ var _Auth_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Auth_RequestPWChange_Handler,
 		},
 		{
-			MethodName: "chamgePW",
-			Handler:    _Auth_ChamgePW_Handler,
+			MethodName: "changePW",
+			Handler:    _Auth_ChangePW_Handler,
+		},
+		{
+			MethodName: "requestResetPW",
+			Handler:    _Auth_RequestResetPW_Handler,
+		},
+		{
+			MethodName: "resetPW",
+			Handler:    _Auth_ResetPW_Handler,
 		},
 		{
 			MethodName: "requestUserNameChange",
