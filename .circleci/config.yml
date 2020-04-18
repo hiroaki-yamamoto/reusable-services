@@ -186,7 +186,7 @@ jobs:
       - image: alpine
     working_directory: ~/repo
     environment:
-      NUM_COV: '6'
+      NUM_COV: '7'
     steps:
       - run:
           name: "Fetch Global Dependencies"
