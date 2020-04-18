@@ -6,10 +6,11 @@ require (
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/go-playground/validator/v10 v10.2.0
 	github.com/golang/mock v1.4.3
-	github.com/golang/protobuf v1.3.5
+	github.com/golang/protobuf v1.4.0
 	github.com/google/go-cmp v0.4.0 // indirect
 	github.com/klauspost/compress v1.10.3 // indirect
 	github.com/kr/text v0.2.0 // indirect
+	github.com/mitchellh/mapstructure v1.2.2
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/onsi/ginkgo v1.12.0
 	github.com/onsi/gomega v1.9.0
