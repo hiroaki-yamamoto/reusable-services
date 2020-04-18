@@ -18,6 +18,13 @@ services:
       - ".:/opt/code"
     depends_on:
       - mongo
+  email:
+    build:
+      context: .
+      args:
+        PKGNAME: email
+    volumes:
+      - ".:/opt/code"
   render:
     build:
       context: .

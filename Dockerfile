@@ -4,6 +4,5 @@ RUN apk --no-cache --update upgrade && apk --no-cache add git gcc libc-dev ca-ce
 ENV GO111MODULE=on
 ENV PKGNAME=${PKGNAME}
 RUN mkdir -p /opt/code
-VOLUME [ "/opt/code" ]
 WORKDIR /opt/code
 ENTRYPOINT [ "./test.sh" ]

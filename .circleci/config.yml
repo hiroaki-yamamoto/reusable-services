@@ -229,6 +229,12 @@ workflows:
           requires:
             -  build
       - test-go:
+          name: email
+          PKGNAME: email
+          COVNAME: email
+          requires:
+            -  build
+      - test-go:
           name: render-go
           PKGNAME: render/go
           COVNAME: render-go
@@ -251,6 +257,7 @@ workflows:
             - mongo-adapter
             - token
             - random
+            - email
             - render-go
             - render-py
             - render-node
