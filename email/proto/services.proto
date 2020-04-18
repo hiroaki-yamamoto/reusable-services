@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+message SendRequest {
+  string email = 1;
+  string txtBody = 2;
+  string htmlBody = 3;
+}
+
+service Email {
+  rpc send(SendRequest) returns (google.protobuf.Empty);
+}
