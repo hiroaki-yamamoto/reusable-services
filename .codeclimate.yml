@@ -1,5 +1,6 @@
 version: "2"
 exclude_patterns:
+  - "**/mocks/**/*.go"
   - "**/rpc/**/*.pb.go"
   - "**/rpc/**/*_pb2.py"
   - "**/rpc/**/*_pb2_grpc.py"
