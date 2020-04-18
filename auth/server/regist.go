@@ -5,6 +5,7 @@ import (
 
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/hiroaki-yamamoto/reusable-services/auth/rpc"
+	tokenRPC "github.com/hiroaki-yamamoto/reusable-services/token/rpc"
 	ms "github.com/mitchellh/mapstructure"
 )
 
@@ -28,5 +29,12 @@ func (me *PublicServer) SignUp(
 	if _, err := me.Adapter.Insert(ctx, model); err != nil {
 		return nil, err
 	}
-	// Need to push activation token
+	tok, err := me.TokenCli.Push(ctx, &tokenRPC.Token{
+		Email:   req.GetEmail(),
+		Purpose: "activation",
+	})
+	if err != nil {
+		return nil, err
+	}
+	// Needs Email Service
 }
