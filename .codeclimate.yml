@@ -1,3 +1,5 @@
 version: "2"
 exclude_patterns:
-  - "*.pb.go"
+  - "**/rpc/**/*.pb.go"
+  - "**/rpc/**/*_pb2.py"
+  - "**/rpc/**/*_pb2_grpc.py"
