@@ -26,7 +26,7 @@ var _ = Describe("Send", func() {
 			for i := range svr.SendFuncs {
 				svr.SendFuncs[i] = func(index int) sendfuncs.Send {
 					return func(
-						from, to, txtBody, HTMLBody string,
+						ctx context.Context, from, to, title, txtBody, HTMLBody string,
 					) error {
 						callIndexes = append(callIndexes, index)
 						return fmt.Errorf("Index: %d", index)
@@ -52,7 +52,7 @@ var _ = Describe("Send", func() {
 				if i < 3 {
 					svr.SendFuncs[i] = func(index int) sendfuncs.Send {
 						return func(
-							from, to, txtBody, HTMLBody string,
+							ctx context.Context, from, to, title, txtBody, HTMLBody string,
 						) error {
 							callIndexes = append(callIndexes, index)
 							return fmt.Errorf("Index: %d", index)

@@ -6,8 +6,9 @@ import "google/protobuf/empty.proto";
 
 message SendRequest {
   string email = 1;
-  string txtBody = 2;
-  string htmlBody = 3;
+  string title = 2;
+  string txtBody = 3;
+  string htmlBody = 4;
 }
 
 service Email {

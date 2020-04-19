@@ -1,6 +1,7 @@
 package server_test
 
 import (
+	"context"
 	"testing"
 
 	"github.com/hiroaki-yamamoto/reusable-services/email/sendfuncs"
@@ -23,7 +24,7 @@ var _ = BeforeEach(func() {
 	for i := range svr.SendFuncs {
 		svr.SendFuncs[i] = func(index int) sendfuncs.Send {
 			return func(
-				from, to, txtBody, HTMLBody string,
+				ctx context.Context, from, to, title, txtBody, HTMLBody string,
 			) error {
 				callIndexes = append(callIndexes, index)
 				return nil
