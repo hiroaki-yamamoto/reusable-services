@@ -5,9 +5,17 @@ import (
 
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/hiroaki-yamamoto/reusable-services/auth/rpc"
+	emailRPC "github.com/hiroaki-yamamoto/reusable-services/email/rpc"
+	renderRPC "github.com/hiroaki-yamamoto/reusable-services/render/go/rpc"
 	tokenRPC "github.com/hiroaki-yamamoto/reusable-services/token/rpc"
 	ms "github.com/mitchellh/mapstructure"
+	"github.com/vmihailenco/msgpack/v4"
 )
+
+type renderRespError struct {
+	Resp *renderRPC.RenderingResponse
+	Err  error
+}
 
 // SignUp implements Signup RPC to register the user.
 // Note that registering the user doesn't mean activate the user. Activation
@@ -36,5 +44,40 @@ func (me *PublicServer) SignUp(
 	if err != nil {
 		return nil, err
 	}
-	// Needs Email Service
+	kwarg, err := msgpack.Marshal(
+		map[string]interface{}{"token": tok.GetToken()},
+	)
+	if err != nil {
+		return nil, err
+	}
+	txtResChan := make(chan *renderRespError)
+	htmlResChan := make(chan *renderRespError)
+	go func() {
+		res, err := me.RenderCli.Render(ctx, &renderRPC.RenderingRequest{
+			TmpName:     me.Templates.Text.Signup,
+			ArgumentMap: kwarg,
+		})
+		txtResChan <- &renderRespError{Resp: res, Err: err}
+	}()
+	go func() {
+		res, err := me.RenderCli.Render(ctx, &renderRPC.RenderingRequest{
+			TmpName:     me.Templates.HTML.Signup,
+			ArgumentMap: kwarg,
+		})
+		htmlResChan <- &renderRespError{Resp: res, Err: err}
+	}()
+	txtRes := <-txtResChan
+	htmlRes := <-htmlResChan
+	if txtRes.Err != nil {
+		return nil, txtRes.Err
+	}
+	if htmlRes.Err != nil {
+		return nil, htmlRes.Err
+	}
+	_, err := me.EmailCli.Send(ctx, &emailRPC.SendRequest{
+		Email:    model.Email,
+		Title:    "",
+		TxtBody:  txtRes.Resp.GetData(),
+		HtmlBody: htmlRes.Resp.GetData(),
+	})
 }

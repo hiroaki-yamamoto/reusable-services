@@ -4,6 +4,7 @@ import (
 	"github.com/hiroaki-yamamoto/reusable-services/adapter"
 	"github.com/hiroaki-yamamoto/reusable-services/auth/crypto"
 	"github.com/hiroaki-yamamoto/reusable-services/auth/vldfuncs"
+	emailRPC "github.com/hiroaki-yamamoto/reusable-services/email/rpc"
 	renderRPC "github.com/hiroaki-yamamoto/reusable-services/render/go/rpc"
 	tokenRPC "github.com/hiroaki-yamamoto/reusable-services/token/rpc"
 	"go.uber.org/zap"
@@ -20,15 +21,22 @@ type TemplateMap struct {
 	Suspend  string // Renders when the user is banned.
 }
 
+// EmailMessage represents a structure of email message template.
+type EmailMessage struct {
+	Text *TemplateMap
+	HTML *TemplateMap
+}
+
 // PublicServer represents an auth server.
 // Note that this server depedns on token and render services.
 type PublicServer struct {
 	Adapter    adapter.IAdapter
 	PWHashAlgo []crypto.PasswordHasher
 	Logger     *zap.Logger
-	Templates  *TemplateMap
+	Templates  *EmailMessage
 	TokenCli   tokenRPC.TokenClient
 	RenderCli  renderRPC.TemplateServiceClient
+	EmailCli   emailRPC.EmailClient
 	checker    *vld.Validate
 }
 
@@ -37,7 +45,8 @@ func NewPublicServer(
 	adapter adapter.IAdapter,
 	hashAlgo []crypto.PasswordHasher,
 	logger *zap.Logger,
-	templates *TemplateMap,
+	templates *EmailMessage,
+	emailClient emailRPC.EmailClient,
 	tokenClient tokenRPC.TokenClient,
 	renderClient renderRPC.TemplateServiceClient,
 ) *PublicServer {
@@ -52,6 +61,7 @@ func NewPublicServer(
 		Templates:  templates,
 		TokenCli:   tokenClient,
 		RenderCli:  renderClient,
+		EmailCli:   emailClient,
 		checker:    checker,
 	}
 }
