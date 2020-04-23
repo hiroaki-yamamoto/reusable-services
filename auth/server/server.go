@@ -1,6 +1,8 @@
 package server
 
 import (
+	"sync"
+
 	"github.com/hiroaki-yamamoto/reusable-services/adapter"
 	"github.com/hiroaki-yamamoto/reusable-services/auth/crypto"
 	"github.com/hiroaki-yamamoto/reusable-services/auth/vldfuncs"
@@ -23,8 +25,9 @@ type TemplateMap struct {
 
 // EmailMessage represents a structure of email message template.
 type EmailMessage struct {
-	Text *TemplateMap
-	HTML *TemplateMap
+	Title string
+	Text  *TemplateMap
+	HTML  *TemplateMap
 }
 
 // PublicServer represents an auth server.
@@ -38,6 +41,7 @@ type PublicServer struct {
 	RenderCli  renderRPC.TemplateServiceClient
 	EmailCli   emailRPC.EmailClient
 	checker    *vld.Validate
+	WaitGroup  sync.WaitGroup // # of asynchronous jobs.
 }
 
 // NewPublicServer creates a new isntance of Server

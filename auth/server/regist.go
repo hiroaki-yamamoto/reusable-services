@@ -10,6 +10,7 @@ import (
 	tokenRPC "github.com/hiroaki-yamamoto/reusable-services/token/rpc"
 	ms "github.com/mitchellh/mapstructure"
 	"github.com/vmihailenco/msgpack/v4"
+	"go.uber.org/zap"
 )
 
 type renderRespError struct {
@@ -52,7 +53,9 @@ func (me *PublicServer) SignUp(
 	}
 	txtResChan := make(chan *renderRespError)
 	htmlResChan := make(chan *renderRespError)
+	me.WaitGroup.Add(2)
 	go func() {
+		defer me.WaitGroup.Done()
 		res, err := me.RenderCli.Render(ctx, &renderRPC.RenderingRequest{
 			TmpName:     me.Templates.Text.Signup,
 			ArgumentMap: kwarg,
@@ -60,6 +63,7 @@ func (me *PublicServer) SignUp(
 		txtResChan <- &renderRespError{Resp: res, Err: err}
 	}()
 	go func() {
+		defer me.WaitGroup.Done()
 		res, err := me.RenderCli.Render(ctx, &renderRPC.RenderingRequest{
 			TmpName:     me.Templates.HTML.Signup,
 			ArgumentMap: kwarg,
@@ -74,10 +78,23 @@ func (me *PublicServer) SignUp(
 	if htmlRes.Err != nil {
 		return nil, htmlRes.Err
 	}
-	_, err := me.EmailCli.Send(ctx, &emailRPC.SendRequest{
-		Email:    model.Email,
-		Title:    "",
-		TxtBody:  txtRes.Resp.GetData(),
-		HtmlBody: htmlRes.Resp.GetData(),
-	})
+	me.WaitGroup.Add(1)
+	go func() {
+		defer me.WaitGroup.Done()
+		emailReq := &emailRPC.SendRequest{
+			Email:    model.Email,
+			Title:    me.Templates.Title,
+			TxtBody:  txtRes.Resp.GetData(),
+			HtmlBody: htmlRes.Resp.GetData(),
+		}
+		_, err = me.EmailCli.Send(ctx, emailReq)
+		if err != nil {
+			me.Logger.Error(
+				"An error has been occured on sending an email:",
+				zap.Any("req", emailReq),
+				zap.Error(err),
+			)
+		}
+	}()
+	return &empty.Empty{}, nil
 }
