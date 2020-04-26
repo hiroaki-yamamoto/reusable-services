@@ -10,16 +10,19 @@ message ActivationRequest {
   string pw = 2;
   string pwConfirm = 3;
   string otpSecret = 4;
+  string recaptcha = 5;
 }
 
 message AuthRequest {
   string userName = 1;
   string password = 2;
+  string recaptcha = 3;
 }
 
 message CredentialChangeRequest1 {
   auth.models.AccessToken token = 1;
   string current = 2;
+  string recaptcha = 3;
 }
 
 message CredentialChangeRequest2 {
@@ -28,25 +31,30 @@ message CredentialChangeRequest2 {
   string current = 3;
   string new = 4;
   string confirm = 5;
+  string recaptcha = 6;
 }
 
 message RemindRequest1 {
   string email = 1;
+  string recaptcha = 2;
 }
 
 message RegistRequest {
   string email = 1;
+  string recaptcha = 2;
 }
 
 message RemindRequest2 {
   string token = 1;
   string email = 2;
   string new = 3;
+  string recaptcha = 4;
 }
 
 message UserExistence {
   string userName = 1;
   bool exists = 2;
+  string recaptcha = 3;
 }
 
 service Auth {
