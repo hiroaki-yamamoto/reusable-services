@@ -31,6 +31,10 @@ build \$pyOut/../__init__.py: getInitPy
 build \$pyOut/../../__init__.py: getInitPy
 EOF
 
+cat >> $(dirname $0)/build.ninja << EOF
+build \$goOut/mocks/services.go: mock \$goOut/services.pb.go
+EOF
+
 for f in $(find $DIR -type f -name '*.proto'); do
 fname=$(basename -s '.proto' ${f})
 childDir=$(realpath $(dirname ${f}) --relative-to=$DIR)
@@ -39,7 +43,6 @@ cat >> $(dirname $0)/build.ninja << EOF
 build \$goOut/$childDir/${fname}.pb.go: protoc $(realpath $f --relative-to=$DIR)
   flags = \$goFlags
   outdir = \$goOut/$childDir
-build \$goOut/mocks/$childDir/${fname}.go: mock \$goOut/$childDir/${fname}.pb.go
 EOF
 
 pyOutFiles=(
