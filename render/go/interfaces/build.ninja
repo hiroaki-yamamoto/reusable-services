@@ -1,0 +1,3 @@
+rule mock
+  command = mockgen -package mocks -source $in > $out
+build mocks/template.go: mock template.go

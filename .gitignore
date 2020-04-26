@@ -17,7 +17,6 @@
 *.cov
 .ninja_deps
 .ninja_log
-build.ninja
 tmp
 # Byte-compiled / optimized / DLL files
 __pycache__/

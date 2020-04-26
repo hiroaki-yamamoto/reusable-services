@@ -1,0 +1,22 @@
+backFlags = --go_out=plugins=grpc
+backOut = ../rpc
+inc = .
+
+rule protoc
+  command = protoc $flags:$outdir -I $inc $in
+
+rule mock
+  command = mockgen -package mocks -source $in -destination $out
+
+
+build $backOut/model.pb.go: protoc model.proto
+  flags = $backFlags
+  outdir = $backOut
+
+build $backOut/service.pb.go: protoc service.proto
+  flags = $backFlags
+  outdir = $backOut
+
+
+# build $backOut/mocks/models.go: mock $backOut/model.pb.go
+build $backOut/mocks/services.go: mock $backOut/service.pb.go

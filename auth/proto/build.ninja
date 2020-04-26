@@ -1,0 +1,17 @@
+backFlags = --go_out=plugins=grpc
+backOut = ../rpc
+inc = .
+
+rule protoc
+  command = protoc $flags:$outdir -I $inc $in
+
+rule mv
+  command = mv $in $out
+
+build $backOut/models.pb.go: protoc models.proto
+  flags = $backFlags
+  outdir = $backOut
+
+build $backOut/services.pb.go: protoc services.proto
+  flags = $backFlags
+  outdir = $backOut
