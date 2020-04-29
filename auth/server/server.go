@@ -14,20 +14,20 @@ import (
 	vld "github.com/go-playground/validator/v10"
 )
 
+// EmailMessage represents a structure of email message template.
+type EmailMessage struct {
+	Title            string
+	TextTemplateName string
+	HTMLTemplateName string
+}
+
 // TemplateMap represents a structure that has template names corresponding
 // to the templates
 type TemplateMap struct {
-	Signup   string // Renders with token when the user signed up.
-	Activate string // Renders when the user activated his/her account.
-	Auth     string // Renders when the user is logged in.
-	Suspend  string // Renders when the user is banned.
-}
-
-// EmailMessage represents a structure of email message template.
-type EmailMessage struct {
-	Title string
-	Text  *TemplateMap
-	HTML  *TemplateMap
+	Signup   *EmailMessage // Renders with token when the user signed up.
+	Activate *EmailMessage // Renders when the user activated his/her account.
+	Auth     *EmailMessage // Renders when the user is logged in.
+	Suspend  *EmailMessage // Renders when the user is banned.
 }
 
 // PublicServer represents an auth server.
@@ -36,7 +36,7 @@ type PublicServer struct {
 	Adapter    adapter.IAdapter
 	PWHashAlgo []crypto.PasswordHasher
 	Logger     *zap.Logger
-	Templates  *EmailMessage
+	Templates  *TemplateMap
 	TokenCli   tokenRPC.TokenClient
 	RenderCli  renderRPC.TemplateServiceClient
 	EmailCli   emailRPC.EmailClient
@@ -49,7 +49,7 @@ func NewPublicServer(
 	adapter adapter.IAdapter,
 	hashAlgo []crypto.PasswordHasher,
 	logger *zap.Logger,
-	templates *EmailMessage,
+	templates *TemplateMap,
 	emailClient emailRPC.EmailClient,
 	tokenClient tokenRPC.TokenClient,
 	renderClient renderRPC.TemplateServiceClient,

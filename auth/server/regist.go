@@ -57,7 +57,7 @@ func (me *PublicServer) SignUp(
 	go func() {
 		defer me.WaitGroup.Done()
 		res, err := me.RenderCli.Render(ctx, &renderRPC.RenderingRequest{
-			TmpName:     me.Templates.Text.Signup,
+			TmpName:     me.Templates.Signup.TextTemplateName,
 			ArgumentMap: kwarg,
 		})
 		txtResChan <- &renderRespError{Resp: res, Err: err}
@@ -65,7 +65,7 @@ func (me *PublicServer) SignUp(
 	go func() {
 		defer me.WaitGroup.Done()
 		res, err := me.RenderCli.Render(ctx, &renderRPC.RenderingRequest{
-			TmpName:     me.Templates.HTML.Signup,
+			TmpName:     me.Templates.Signup.HTMLTemplateName,
 			ArgumentMap: kwarg,
 		})
 		htmlResChan <- &renderRespError{Resp: res, Err: err}
@@ -83,7 +83,7 @@ func (me *PublicServer) SignUp(
 		defer me.WaitGroup.Done()
 		emailReq := &emailRPC.SendRequest{
 			Email:    model.Email,
-			Title:    me.Templates.Title,
+			Title:    me.Templates.Signup.Title,
 			TxtBody:  txtRes.Resp.GetData(),
 			HtmlBody: htmlRes.Resp.GetData(),
 		}
