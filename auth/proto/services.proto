@@ -16,7 +16,8 @@ message ActivationRequest {
 message AuthRequest {
   string userName = 1;
   string password = 2;
-  string recaptcha = 3;
+  string otp = 3;
+  string recaptcha = 4;
 }
 
 message CredentialChangeRequest1 {
@@ -30,25 +31,28 @@ message CredentialChangeRequest2 {
   string token = 2;
   string current = 3;
   string new = 4;
-  string confirm = 5;
-  string recaptcha = 6;
+  string otp = 5;
+  string confirm = 6;
+  string recaptcha = 7;
 }
 
 message RemindRequest1 {
   string email = 1;
-  string recaptcha = 2;
-}
-
-message RegistRequest {
-  string email = 1;
-  string recaptcha = 2;
+  string otp = 2;
+  string recaptcha = 3;
 }
 
 message RemindRequest2 {
   string token = 1;
   string email = 2;
   string new = 3;
-  string recaptcha = 4;
+  string otp = 4;
+  string recaptcha = 5;
+}
+
+message RegistRequest {
+  string email = 1;
+  string recaptcha = 2;
 }
 
 message UserExistence {
@@ -64,13 +68,13 @@ service Auth {
   rpc checkUserExists(UserExistence) returns (UserExistence);
   rpc auth(AuthRequest) returns (auth.models.AccessToken);
   rpc requestEmailChange(CredentialChangeRequest1) returns (google.protobuf.Empty);
-  rpc chamgeEmail(CredentialChangeRequest2) returns (google.protobuf.Empty);
+  rpc changeEmail(CredentialChangeRequest2) returns (google.protobuf.Empty);
   rpc requestPWChange(CredentialChangeRequest1) returns (google.protobuf.Empty);
   rpc changePW(CredentialChangeRequest2) returns (google.protobuf.Empty);
   rpc requestResetPW(RemindRequest1) returns (google.protobuf.Empty);
   rpc resetPW(RemindRequest2) returns (google.protobuf.Empty);
   rpc requestUserNameChange(CredentialChangeRequest1) returns (google.protobuf.Empty);
-  rpc chamgeUserName(CredentialChangeRequest2) returns (google.protobuf.Empty);
+  rpc changeUserName(CredentialChangeRequest2) returns (google.protobuf.Empty);
   rpc requestChangeOTP(auth.models.AccessToken) returns (google.protobuf.Empty);
   rpc changeOTP(CredentialChangeRequest2) returns (google.protobuf.Empty);
 }
