@@ -10,7 +10,7 @@ require (
 	github.com/klauspost/compress v1.10.3 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/mailgun/mailgun-go/v4 v4.0.1
-	github.com/mitchellh/mapstructure v1.2.2
+	github.com/mitchellh/mapstructure v1.3.0
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/onsi/ginkgo v1.12.0
 	github.com/onsi/gomega v1.9.0
