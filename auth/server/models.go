@@ -24,4 +24,6 @@ type Auth struct {
 	PWHash    []byte `validate:"required"`
 	PWAlgo    string `validate:"required"`
 	OTPSecret string `validate:"base36"`
+	Recaptcha string `bson:"-" validate:"required,recaptcha=IPAddr"`
+	IPAddr    string `bson:"-" validate:"required,ip"`
 }
