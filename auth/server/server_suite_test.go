@@ -45,7 +45,7 @@ var _ = BeforeEach(func() {
 				HTMLTemplateName: "signup.html",
 			},
 		},
-		emailCli, tokCli, renderCli,
+		emailCli, tokCli, renderCli, "secret",
 	)
 })
 

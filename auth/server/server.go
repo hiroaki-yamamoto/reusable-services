@@ -53,11 +53,14 @@ func NewPublicServer(
 	emailClient emailRPC.EmailClient,
 	tokenClient tokenRPC.TokenClient,
 	renderClient renderRPC.TemplateServiceClient,
+	recaptchaSecret string,
 ) *PublicServer {
 	checker := vld.New()
 	checker.RegisterValidationCtx(
 		"dbunique", vldfuncs.DBUnique(logger, adapter),
 	)
+	checker.RegisterValidation("base36", vldfuncs.Base36)
+	checker.RegisterValidation("recaptcha", vldfuncs.Recaptcha(recaptchaSecret))
 	return &PublicServer{
 		PWHashAlgo: hashAlgo,
 		Adapter:    adapter,
