@@ -34,6 +34,6 @@
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.1",
     "nyc": "^15.0.0",
-    "pug": "^2.0.4"
+    "pug": "^3.0.0"
   }
 }
