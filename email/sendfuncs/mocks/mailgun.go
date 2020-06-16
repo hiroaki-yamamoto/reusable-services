@@ -305,6 +305,20 @@ func (mr *MockMailgunMockRecorder) DeleteBounce(arg0, arg1 interface{}) *gomock.
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteBounce", reflect.TypeOf((*MockMailgun)(nil).DeleteBounce), arg0, arg1)
 }
 
+// DeleteBounceList mocks base method
+func (m *MockMailgun) DeleteBounceList(arg0 context.Context) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteBounceList", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteBounceList indicates an expected call of DeleteBounceList
+func (mr *MockMailgunMockRecorder) DeleteBounceList(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteBounceList", reflect.TypeOf((*MockMailgun)(nil).DeleteBounceList), arg0)
+}
+
 // DeleteComplaint mocks base method
 func (m *MockMailgun) DeleteComplaint(arg0 context.Context, arg1 string) error {
 	m.ctrl.T.Helper()
