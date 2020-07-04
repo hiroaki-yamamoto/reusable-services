@@ -12,7 +12,7 @@ require (
 	github.com/mailgun/mailgun-go/v4 v4.1.3
 	github.com/mitchellh/mapstructure v1.3.2
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
-	github.com/onsi/ginkgo v1.13.0
+	github.com/onsi/ginkgo v1.14.0
 	github.com/onsi/gomega v1.10.1
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/stretchr/testify v1.5.1 // indirect
