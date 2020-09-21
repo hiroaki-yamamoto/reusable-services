@@ -945,6 +945,20 @@ func (mr *MockMailgunMockRecorder) ListEvents(arg0 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListEvents", reflect.TypeOf((*MockMailgun)(nil).ListEvents), arg0)
 }
 
+// ListEventsWithDomain mocks base method
+func (m *MockMailgun) ListEventsWithDomain(arg0 *mailgun.ListEventOptions, arg1 string) *mailgun.EventIterator {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListEventsWithDomain", arg0, arg1)
+	ret0, _ := ret[0].(*mailgun.EventIterator)
+	return ret0
+}
+
+// ListEventsWithDomain indicates an expected call of ListEventsWithDomain
+func (mr *MockMailgunMockRecorder) ListEventsWithDomain(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListEventsWithDomain", reflect.TypeOf((*MockMailgun)(nil).ListEventsWithDomain), arg0, arg1)
+}
+
 // ListExports mocks base method
 func (m *MockMailgun) ListExports(arg0 context.Context, arg1 string) ([]mailgun.Export, error) {
 	m.ctrl.T.Helper()
