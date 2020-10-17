@@ -3,7 +3,7 @@ module github.com/hiroaki-yamamoto/reusable-services
 go 1.13
 
 require (
-	github.com/go-playground/validator/v10 v10.4.0
+	github.com/go-playground/validator/v10 v10.4.1
 	github.com/golang/mock v1.4.4
 	github.com/golang/protobuf v1.4.3
 	github.com/hiroaki-yamamoto/recaptcha v1.1.0
