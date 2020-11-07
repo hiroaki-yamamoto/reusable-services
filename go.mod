@@ -17,10 +17,9 @@ require (
 	github.com/tidwall/pretty v1.0.1 // indirect
 	github.com/vmihailenco/msgpack/v4 v4.3.12
 	github.com/xdg/stringprep v1.0.0 // indirect
-	go.mongodb.org/mongo-driver v1.4.2
+	go.mongodb.org/mongo-driver v1.4.3
 	go.uber.org/zap v1.16.0
 	golang.org/x/sync v0.0.0-20200317015054-43a5402ce75a // indirect
-	google.golang.org/genproto v0.0.0-20200406120821-33397c535dc2 // indirect
-	google.golang.org/grpc v1.33.1
+	google.golang.org/grpc v1.33.2
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
 )
